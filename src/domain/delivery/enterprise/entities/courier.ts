@@ -62,7 +62,7 @@ class Courier extends Entity<ICourier> {
     return this.props.updatedAt;
   }
 
-  private touch(){
+  private touch() {
     this.props.updatedAt = new Date();
   }
 }
