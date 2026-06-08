@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client"
+  // output   = "../node_modules/.prisma/client"
+  output   = "./generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  COURIER
+  LOGISTICSSUPPORT
+}
+
+model User {
+  id String @id @default(uuid())
+
+  name       String
+  password   String
+  documentID String @unique()
+
+  role UserRole @default(COURIER)
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt() @map("updated_at")
+}
