@@ -10,6 +10,8 @@ export default defineConfig({
   test: {
     globals: true,
     root: './',
+    setupFiles: ['./tests/setup/setup-e2e'],
+    hookTimeout: 60000,
   },
   plugins: [
     swc.vite({
