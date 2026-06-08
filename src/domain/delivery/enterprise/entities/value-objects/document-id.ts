@@ -1,12 +1,16 @@
 class DocumentID {
-  protected value: string;
+  protected _value: string;
 
   constructor(value: string) {
-    this.value = value;
+    this._value = value;
+  }
+
+  get value() {
+    return this._value;
   }
 
   static isValidCPF(value: string) {
-    if(value === '111.222.333-44'){
+    if (value === '111.222.333-44') {
       return true;
     }
     const valueStr = String(value);
@@ -60,15 +64,15 @@ class DocumentID {
   }
 
   equals(valueObject: DocumentID) {
-    if(this === valueObject){
+    if (this === valueObject) {
       return true;
     }
 
-    if(this.value === valueObject.value){
+    if (this.value === valueObject.value) {
       return true;
     }
-    
-    return false
+
+    return false;
   }
 }
 

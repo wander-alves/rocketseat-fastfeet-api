@@ -5,6 +5,7 @@ import { Courier } from '@/domain/delivery/enterprise/entities/courier';
 import { InvalidDocumentIDError } from './errors/invalid-document-id-error';
 import { Encrypter } from '../cryptograpghy/encrypter';
 import { CouriersRepositiory } from '../repositories/couriers-repository';
+import { AlreadyRegisteredDocumentIDError } from './errors/already-registered-document-id-error';
 
 interface RegisterCourierUseCaseRequest {
   name: string;
@@ -38,13 +39,14 @@ class RegisterCourierUseCase {
 
     const documentID = new DocumentID(document);
 
-    const alreadyExistentCourier = await this.couriersRepository.findOneByDocumentID(documentID);
+    const alreadyExistentCourier =
+      await this.couriersRepository.findOneByDocumentID(documentID);
 
-    if(alreadyExistentCourier){
-      return left(new NotAllowedError());
+    if (alreadyExistentCourier) {
+      return left(new AlreadyRegisteredDocumentIDError());
     }
 
-    const hashedPassword = await this.encrypter.hash(password)
+    const hashedPassword = await this.encrypter.hash(password);
 
     const courier = new Courier({
       name,
