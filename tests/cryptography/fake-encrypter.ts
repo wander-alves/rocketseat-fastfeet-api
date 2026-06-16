@@ -1,7 +1,6 @@
 import { Encrypter } from '@/domain/delivery/application/cryptograpghy/encrypter';
 
 class FakeEncrypter implements Encrypter {
-  
   async encrypt(payload: Record<string, unknown>) {
     return JSON.stringify(payload);
   }
@@ -12,7 +11,7 @@ class FakeEncrypter implements Encrypter {
 
   async compare(plainText: string, hash: string) {
     const hashedPlainText = await this.hash(plainText);
-    return hashedPlainText  === hash;
+    return hashedPlainText === hash;
   }
 }
 

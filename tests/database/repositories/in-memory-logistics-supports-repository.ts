@@ -20,6 +20,16 @@ class InMemoryLogisticsSupportsRepositiory implements LogisticsSupportsRepositio
 
     return logisticssupport;
   }
+
+  async findOneById(id: string) {
+    const logisticssupport = this.items.find((item) => item.id.value === id);
+
+    if (!logisticssupport) {
+      return null;
+    }
+
+    return logisticssupport;
+  }
 }
 
 export { InMemoryLogisticsSupportsRepositiory };

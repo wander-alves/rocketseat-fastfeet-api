@@ -6,8 +6,10 @@ import { InvalidDocumentIDError } from './errors/invalid-document-id-error';
 import { Encrypter } from '../cryptograpghy/encrypter';
 import { CouriersRepositiory } from '../repositories/couriers-repository';
 import { AlreadyRegisteredDocumentIDError } from './errors/already-registered-document-id-error';
+import { LogisticsSupportsRepositiory } from '../repositories/logistics-supports-repository';
 
 interface RegisterCourierUseCaseRequest {
+  accessToken: string;
   name: string;
   document: string;
   password: string;
@@ -21,18 +23,35 @@ type RegisterCourierUseCaseResponse = Either<
 >;
 
 class RegisterCourierUseCase {
+  private logisticsSupportsRepository: LogisticsSupportsRepositiory;
   private couriersRepository: CouriersRepositiory;
   private encrypter: Encrypter;
-  constructor(couriersRepository: CouriersRepositiory, encrypter: Encrypter) {
+
+  constructor(
+    logisticsSupportsRepository: LogisticsSupportsRepositiory,
+    couriersRepository: CouriersRepositiory,
+    encrypter: Encrypter,
+  ) {
+    this.logisticsSupportsRepository = logisticsSupportsRepository;
     this.couriersRepository = couriersRepository;
     this.encrypter = encrypter;
   }
 
   async execute({
+    accessToken,
     name,
     document,
     password,
   }: RegisterCourierUseCaseRequest): Promise<RegisterCourierUseCaseResponse> {
+    const logisticsSupportId = JSON.parse(accessToken).sub;
+
+    const logisticsSupport =
+      await this.logisticsSupportsRepository.findOneById(logisticsSupportId);
+
+    if (!logisticsSupport) {
+      return left(new NotAllowedError());
+    }
+
     if (!DocumentID.isValidCPF(document)) {
       return left(new InvalidDocumentIDError());
     }

@@ -1,24 +1,50 @@
 import { describe, beforeEach, it, expect } from 'vitest';
 import { RegisterCourierUseCase } from './register-courier';
 
+import { InMemoryLogisticsSupportsRepositiory } from '../../../../../tests/database/repositories/in-memory-logistics-supports-repository';
 import { InMemoryCouriersRepositiory } from '../../../../../tests/database/repositories/in-memory-couriers-repository';
 import { FakeEncrypter } from '../../../../../tests/cryptography/fake-encrypter';
 
 import { InvalidDocumentIDError } from './errors/invalid-document-id-error';
 import { AlreadyRegisteredDocumentIDError } from './errors/already-registered-document-id-error';
+import { LogisticsSupport } from '../../enterprise/entities/logistics-support';
+import { DocumentID } from '../../enterprise/entities/value-objects/document-id';
 
 describe('[Unitary] Register Courier', () => {
+  let logisticsSupportsRepository: InMemoryLogisticsSupportsRepositiory;
   let couriersRepository: InMemoryCouriersRepositiory;
   let encrypter: FakeEncrypter;
   let sut: RegisterCourierUseCase;
+  let accessToken: string;
+  let logisticsSupport: LogisticsSupport;
 
-  beforeEach(() => {
-    couriersRepository = new InMemoryCouriersRepositiory();
+  beforeEach(async () => {
+    logisticsSupportsRepository = new InMemoryLogisticsSupportsRepositiory();
     encrypter = new FakeEncrypter();
-    sut = new RegisterCourierUseCase(couriersRepository, encrypter);
+
+    logisticsSupport = new LogisticsSupport({
+      name: 'master',
+      password: 'ofputtets',
+      documentID: new DocumentID('111.222.333-44'),
+    });
+
+    accessToken = await encrypter.encrypt({
+      sub: logisticsSupport.id.value,
+    });
+
+    logisticsSupportsRepository.items.push(logisticsSupport);
+
+    couriersRepository = new InMemoryCouriersRepositiory();
+    sut = new RegisterCourierUseCase(
+      logisticsSupportsRepository,
+      couriersRepository,
+      encrypter,
+    );
   });
+
   it('should be able to register a courier with valid data', async () => {
     const result = await sut.execute({
+      accessToken,
       name: 'John Doe',
       password: 'strong',
       document: '111.222.333-44',
@@ -38,6 +64,7 @@ describe('[Unitary] Register Courier', () => {
 
   it('should not be able to register a courier with invalid document', async () => {
     const courier = await sut.execute({
+      accessToken,
       name: 'Jane Doe',
       password: 'strong',
       document: '111.222.333-45',
@@ -50,12 +77,14 @@ describe('[Unitary] Register Courier', () => {
 
   it('should not be able to register with duplicated document id', async () => {
     await sut.execute({
+      accessToken,
       name: 'John Doe',
       password: 'strong',
       document: '111.222.333-44',
     });
 
     const courier = await sut.execute({
+      accessToken,
       name: 'Joseph Doe',
       password: 'strong',
       document: '111.222.333-44',
