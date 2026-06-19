@@ -1,14 +1,16 @@
 import { describe, beforeEach, it, expect } from 'vitest';
 
-import { AuthenticateLogisticsSupportUseCase } from './authenticate-logistics-support-use-case';
-import { InMemoryLogisticsSupportsRepositiory } from '../../../../../tests/database/repositories/in-memory-logistics-supports-repository';
-import { FakeEncrypter } from '../../../../../tests/cryptography/fake-encrypter';
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
-import { DocumentID } from '../../enterprise/entities/value-objects/document-id';
-import { LogisticsSupport } from '../../enterprise/entities/logistics-support';
-import { InvalidCredentialError } from './errors/invalid-credential-error';
+import { DocumentID } from '@/domain/delivery/enterprise/entities/value-objects/document-id';
+import { LogisticsSupport } from '@/domain/delivery/enterprise/entities/logistics-support';
+import { AuthenticateLogisticsSupportUseCase } from '@/domain/delivery/application/use-cases/authenticate-logistics-support';
 
-describe('[Unitary] Authenticate Logistics Support Use Case', () => {
+import { InvalidCredentialError } from '@/domain/delivery/application/use-cases/errors/invalid-credential-error';
+
+import { FakeEncrypter } from '@/../tests/cryptography/fake-encrypter';
+import { InMemoryLogisticsSupportsRepositiory } from '@/../tests/database/repositories/in-memory-logistics-supports-repository';
+
+describe('[Unatary] Authenticate Logistics Support Use Case', () => {
   let logisticsSupportsRepository: InMemoryLogisticsSupportsRepositiory;
   let encrypter: FakeEncrypter;
   let sut: AuthenticateLogisticsSupportUseCase;

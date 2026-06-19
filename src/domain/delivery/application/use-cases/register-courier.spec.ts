@@ -1,16 +1,17 @@
 import { describe, beforeEach, it, expect } from 'vitest';
-import { RegisterCourierUseCase } from './register-courier';
 
-import { InMemoryLogisticsSupportsRepositiory } from '../../../../../tests/database/repositories/in-memory-logistics-supports-repository';
-import { InMemoryCouriersRepositiory } from '../../../../../tests/database/repositories/in-memory-couriers-repository';
-import { FakeEncrypter } from '../../../../../tests/cryptography/fake-encrypter';
+import { RegisterCourierUseCase } from '@/domain/delivery/application/use-cases/register-courier';
+import { LogisticsSupport } from '@/domain/delivery/enterprise/entities/logistics-support';
+import { DocumentID } from '@/domain/delivery/enterprise/entities/value-objects/document-id';
 
-import { InvalidDocumentIDError } from './errors/invalid-document-id-error';
-import { AlreadyRegisteredDocumentIDError } from './errors/already-registered-document-id-error';
-import { LogisticsSupport } from '../../enterprise/entities/logistics-support';
-import { DocumentID } from '../../enterprise/entities/value-objects/document-id';
+import { InMemoryLogisticsSupportsRepositiory } from '@/../tests/database/repositories/in-memory-logistics-supports-repository';
+import { InMemoryCouriersRepositiory } from '@/../tests/database/repositories/in-memory-couriers-repository';
+import { FakeEncrypter } from '@/../tests/cryptography/fake-encrypter';
 
-describe('[Unitary] Register Courier', () => {
+import { InvalidDocumentIDError } from '@/domain/delivery/application/use-cases/errors/invalid-document-id-error';
+import { AlreadyRegisteredDocumentIDError } from '@/domain/delivery/application/use-cases/errors/already-registered-document-id-error';
+
+describe('[Unitary] Register Courier Use Case', () => {
   let logisticsSupportsRepository: InMemoryLogisticsSupportsRepositiory;
   let couriersRepository: InMemoryCouriersRepositiory;
   let encrypter: FakeEncrypter;

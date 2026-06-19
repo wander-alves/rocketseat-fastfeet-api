@@ -1,12 +1,14 @@
-import { Either, left, right } from '@/core/either';
-import { NotAllowedError } from '@/core/errors/not-allowed-error';
-import { DocumentID } from '@/domain/delivery/enterprise/entities/value-objects/document-id';
 import { Courier } from '@/domain/delivery/enterprise/entities/courier';
-import { InvalidDocumentIDError } from './errors/invalid-document-id-error';
-import { Encrypter } from '../cryptograpghy/encrypter';
-import { CouriersRepositiory } from '../repositories/couriers-repository';
-import { AlreadyRegisteredDocumentIDError } from './errors/already-registered-document-id-error';
+import { DocumentID } from '@/domain/delivery/enterprise/entities/value-objects/document-id';
+
+import { CouriersRepositiory } from '@/domain/delivery/application/repositories/couriers-repository';
 import { LogisticsSupportsRepositiory } from '../repositories/logistics-supports-repository';
+import { Encrypter } from '@/domain/delivery/application/cryptography/encrypter';
+
+import { AlreadyRegisteredDocumentIDError } from '@/domain/delivery/application/use-cases/errors/already-registered-document-id-error';
+import { NotAllowedError } from '@/core/errors/not-allowed-error';
+import { InvalidDocumentIDError } from '@/domain/delivery/application/use-cases/errors/invalid-document-id-error';
+import { Either, left, right } from '@/core/either';
 
 interface RegisterCourierUseCaseRequest {
   accessToken: string;
@@ -16,7 +18,7 @@ interface RegisterCourierUseCaseRequest {
 }
 
 type RegisterCourierUseCaseResponse = Either<
-  NotAllowedError | InvalidDocumentIDError,
+  NotAllowedError | InvalidDocumentIDError | AlreadyRegisteredDocumentIDError,
   {
     courier: Courier;
   }
