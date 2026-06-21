@@ -9,6 +9,7 @@ export default defineConfig({
   },
   test: {
     globals: true,
+    include: ['**/*.e2e-spec.ts'],
     root: './',
     setupFiles: ['./tests/setup/setup-e2e'],
     hookTimeout: 60000,
