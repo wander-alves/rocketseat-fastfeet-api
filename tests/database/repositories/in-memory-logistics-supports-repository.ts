@@ -1,6 +1,5 @@
 import { LogisticsSupportsRepositiory } from '@/domain/delivery/application/repositories/logistics-supports-repository';
 import { LogisticsSupport } from '@/domain/delivery/enterprise/entities/logistics-support';
-import { DocumentID } from '@/domain/delivery/enterprise/entities/value-objects/document-id';
 
 class InMemoryLogisticsSupportsRepositiory implements LogisticsSupportsRepositiory {
   public items: LogisticsSupport[] = [];
@@ -9,10 +8,8 @@ class InMemoryLogisticsSupportsRepositiory implements LogisticsSupportsRepositio
     this.items.push(logisticssupport);
   }
 
-  async findOneByDocumentID(documentID: DocumentID) {
-    const logisticssupport = this.items.find((item) =>
-      item.documentID.equals(documentID),
-    );
+  async findOneById(id: string) {
+    const logisticssupport = this.items.find((item) => item.id.value === id);
 
     if (!logisticssupport) {
       return null;
@@ -21,8 +18,10 @@ class InMemoryLogisticsSupportsRepositiory implements LogisticsSupportsRepositio
     return logisticssupport;
   }
 
-  async findOneById(id: string) {
-    const logisticssupport = this.items.find((item) => item.id.value === id);
+  async findOneByDocumentID(documentID: string) {
+    const logisticssupport = this.items.find(
+      (item) => item.documentID.value === documentID,
+    );
 
     if (!logisticssupport) {
       return null;

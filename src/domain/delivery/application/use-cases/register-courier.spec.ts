@@ -16,7 +16,6 @@ describe('[Unitary] Register Courier Use Case', () => {
   let couriersRepository: InMemoryCouriersRepositiory;
   let encrypter: FakeEncrypter;
   let sut: RegisterCourierUseCase;
-  let accessToken: string;
   let logisticsSupport: LogisticsSupport;
 
   beforeEach(async () => {
@@ -27,10 +26,6 @@ describe('[Unitary] Register Courier Use Case', () => {
       name: 'master',
       password: 'ofputtets',
       documentID: new DocumentID('111.222.333-44'),
-    });
-
-    accessToken = await encrypter.encrypt({
-      sub: logisticsSupport.id.value,
     });
 
     logisticsSupportsRepository.items.push(logisticsSupport);
@@ -45,7 +40,7 @@ describe('[Unitary] Register Courier Use Case', () => {
 
   it('should be able to register a courier with valid data', async () => {
     const result = await sut.execute({
-      accessToken,
+      logisticsSupportId: logisticsSupport.id.value,
       name: 'John Doe',
       password: 'strong',
       document: '111.222.333-44',
@@ -65,7 +60,7 @@ describe('[Unitary] Register Courier Use Case', () => {
 
   it('should not be able to register a courier with invalid document', async () => {
     const courier = await sut.execute({
-      accessToken,
+      logisticsSupportId: logisticsSupport.id.value,
       name: 'Jane Doe',
       password: 'strong',
       document: '111.222.333-45',
@@ -78,14 +73,14 @@ describe('[Unitary] Register Courier Use Case', () => {
 
   it('should not be able to register with duplicated document id', async () => {
     await sut.execute({
-      accessToken,
+      logisticsSupportId: logisticsSupport.id.value,
       name: 'John Doe',
       password: 'strong',
       document: '111.222.333-44',
     });
 
     const courier = await sut.execute({
-      accessToken,
+      logisticsSupportId: logisticsSupport.id.value,
       name: 'Joseph Doe',
       password: 'strong',
       document: '111.222.333-44',

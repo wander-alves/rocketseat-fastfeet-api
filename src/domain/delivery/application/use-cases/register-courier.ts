@@ -11,7 +11,7 @@ import { InvalidDocumentIDError } from '@/domain/delivery/application/use-cases/
 import { Either, left, right } from '@/core/either';
 
 interface RegisterCourierUseCaseRequest {
-  accessToken: string;
+  logisticsSupportId: string;
   name: string;
   document: string;
   password: string;
@@ -40,13 +40,11 @@ class RegisterCourierUseCase {
   }
 
   async execute({
-    accessToken,
+    logisticsSupportId,
     name,
     document,
     password,
   }: RegisterCourierUseCaseRequest): Promise<RegisterCourierUseCaseResponse> {
-    const logisticsSupportId = JSON.parse(accessToken).sub;
-
     const logisticsSupport =
       await this.logisticsSupportsRepository.findOneById(logisticsSupportId);
 
@@ -61,7 +59,7 @@ class RegisterCourierUseCase {
     const documentID = new DocumentID(document);
 
     const alreadyExistentCourier =
-      await this.couriersRepository.findOneByDocumentID(documentID);
+      await this.couriersRepository.findOneByDocumentID(document);
 
     if (alreadyExistentCourier) {
       return left(new AlreadyRegisteredDocumentIDError());

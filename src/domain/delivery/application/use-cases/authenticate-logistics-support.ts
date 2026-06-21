@@ -1,10 +1,8 @@
-import { DocumentID } from '@/domain/delivery/enterprise/entities/value-objects/document-id';
-
 import { LogisticsSupportsRepositiory } from '@/domain/delivery/application/repositories/logistics-supports-repository';
 import { Encrypter } from '@/domain/delivery/application/cryptography/encrypter';
 
 import { Either, left, right } from '@/core/either';
-import { InvalidCredentialError } from './errors/invalid-credential-error';
+import { InvalidCredentialError } from '@/domain/delivery/application/use-cases/errors/invalid-credential-error';
 
 interface AuthenticateLogisticsSupportUseCaseRequest {
   document: string;
@@ -34,10 +32,8 @@ class AuthenticateLogisticsSupportUseCase {
     document,
     password,
   }: AuthenticateLogisticsSupportUseCaseRequest): Promise<AuthenticateLogisticsSupportUseCaseResponse> {
-    const documentID = new DocumentID(document);
-
     const logisticsSupport =
-      await this.logisticsSupportsRepository.findOneByDocumentID(documentID);
+      await this.logisticsSupportsRepository.findOneByDocumentID(document);
 
     if (!logisticsSupport) {
       return left(new InvalidCredentialError());

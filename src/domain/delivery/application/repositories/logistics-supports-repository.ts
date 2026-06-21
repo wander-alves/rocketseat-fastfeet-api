@@ -1,11 +1,10 @@
-import { LogisticsSupport } from '../../enterprise/entities/logistics-support';
-import { DocumentID } from '../../enterprise/entities/value-objects/document-id';
+import { LogisticsSupport } from '@/domain/delivery/enterprise/entities/logistics-support';
 
 abstract class LogisticsSupportsRepositiory {
   abstract create(logisticssupport: LogisticsSupport): Promise<void>;
   abstract findOneById(id: string): Promise<LogisticsSupport | null>;
   abstract findOneByDocumentID(
-    documentID: DocumentID,
+    documentID: string,
   ): Promise<LogisticsSupport | null>;
 }
 

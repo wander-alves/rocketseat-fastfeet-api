@@ -1,6 +1,5 @@
 import { CouriersRepositiory } from '@/domain/delivery/application/repositories/couriers-repository';
 import { Courier } from '@/domain/delivery/enterprise/entities/courier';
-import { DocumentID } from '@/domain/delivery/enterprise/entities/value-objects/document-id';
 
 class InMemoryCouriersRepositiory implements CouriersRepositiory {
   public items: Courier[] = [];
@@ -9,9 +8,19 @@ class InMemoryCouriersRepositiory implements CouriersRepositiory {
     this.items.push(courier);
   }
 
-  async findOneByDocumentID(documentID: DocumentID) {
-    const courier = this.items.find((item) =>
-      item.documentID.equals(documentID),
+  async findOneById(id: string) {
+    const courier = this.items.find((item) => item.id.value === id);
+
+    if (!courier) {
+      return null;
+    }
+
+    return courier;
+  }
+
+  async findOneByDocumentID(documentID: string) {
+    const courier = this.items.find(
+      (item) => item.documentID.value === documentID,
     );
 
     if (!courier) {

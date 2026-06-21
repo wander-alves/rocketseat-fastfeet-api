@@ -14,10 +14,10 @@ abstract class Entity<Props> {
   }
 
   public equals(entity: Entity<unknown>) {
-    if (entity === this) {
+    if (this === entity) {
       return true;
     }
-    if (entity.id === this.id) {
+    if (this.id.equals(entity.id)) {
       return true;
     }
 
