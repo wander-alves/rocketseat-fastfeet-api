@@ -1,4 +1,4 @@
-import { LogisticsSupportsRepositiory } from '@/domain/delivery/application/repositories/logistics-supports-repository';
+import { LogisticsSupportsRepository } from '@/domain/delivery/application/repositories/logistics-supports-repository';
 import { Encrypter } from '@/domain/delivery/application/cryptography/encrypter';
 
 import { Either, left, right } from '@/core/either';
@@ -17,11 +17,11 @@ type AuthenticateLogisticsSupportUseCaseResponse = Either<
 >;
 
 class AuthenticateLogisticsSupportUseCase {
-  private logisticsSupportsRepository: LogisticsSupportsRepositiory;
+  private logisticsSupportsRepository: LogisticsSupportsRepository;
   private encrypter: Encrypter;
 
   constructor(
-    logisticsSupportsRepository: LogisticsSupportsRepositiory,
+    logisticsSupportsRepository: LogisticsSupportsRepository,
     encrypter: Encrypter,
   ) {
     this.logisticsSupportsRepository = logisticsSupportsRepository;

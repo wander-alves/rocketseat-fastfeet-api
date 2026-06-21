@@ -8,15 +8,15 @@ import { AuthenticateLogisticsSupportUseCase } from '@/domain/delivery/applicati
 import { InvalidCredentialError } from '@/domain/delivery/application/use-cases/errors/invalid-credential-error';
 
 import { FakeEncrypter } from '@/../tests/cryptography/fake-encrypter';
-import { InMemoryLogisticsSupportsRepositiory } from '@/../tests/database/repositories/in-memory-logistics-supports-repository';
+import { InMemoryLogisticsSupportsRepository } from '@/../tests/database/repositories/in-memory-logistics-supports-repository';
 
 describe('[Unatary] Authenticate Logistics Support Use Case', () => {
-  let logisticsSupportsRepository: InMemoryLogisticsSupportsRepositiory;
+  let logisticsSupportsRepository: InMemoryLogisticsSupportsRepository;
   let encrypter: FakeEncrypter;
   let sut: AuthenticateLogisticsSupportUseCase;
 
   beforeEach(async () => {
-    logisticsSupportsRepository = new InMemoryLogisticsSupportsRepositiory();
+    logisticsSupportsRepository = new InMemoryLogisticsSupportsRepository();
     encrypter = new FakeEncrypter();
     sut = new AuthenticateLogisticsSupportUseCase(
       logisticsSupportsRepository,

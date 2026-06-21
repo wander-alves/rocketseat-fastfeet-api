@@ -4,22 +4,22 @@ import { RegisterCourierUseCase } from '@/domain/delivery/application/use-cases/
 import { LogisticsSupport } from '@/domain/delivery/enterprise/entities/logistics-support';
 import { DocumentID } from '@/domain/delivery/enterprise/entities/value-objects/document-id';
 
-import { InMemoryLogisticsSupportsRepositiory } from '@/../tests/database/repositories/in-memory-logistics-supports-repository';
-import { InMemoryCouriersRepositiory } from '@/../tests/database/repositories/in-memory-couriers-repository';
+import { InMemoryLogisticsSupportsRepository } from '@/../tests/database/repositories/in-memory-logistics-supports-repository';
+import { InMemoryCouriersRepository } from '@/../tests/database/repositories/in-memory-couriers-repository';
 import { FakeEncrypter } from '@/../tests/cryptography/fake-encrypter';
 
 import { InvalidDocumentIDError } from '@/domain/delivery/application/use-cases/errors/invalid-document-id-error';
 import { AlreadyRegisteredDocumentIDError } from '@/domain/delivery/application/use-cases/errors/already-registered-document-id-error';
 
 describe('[Unitary] Register Courier Use Case', () => {
-  let logisticsSupportsRepository: InMemoryLogisticsSupportsRepositiory;
-  let couriersRepository: InMemoryCouriersRepositiory;
+  let logisticsSupportsRepository: InMemoryLogisticsSupportsRepository;
+  let couriersRepository: InMemoryCouriersRepository;
   let encrypter: FakeEncrypter;
   let sut: RegisterCourierUseCase;
   let logisticsSupport: LogisticsSupport;
 
   beforeEach(async () => {
-    logisticsSupportsRepository = new InMemoryLogisticsSupportsRepositiory();
+    logisticsSupportsRepository = new InMemoryLogisticsSupportsRepository();
     encrypter = new FakeEncrypter();
 
     logisticsSupport = new LogisticsSupport({
@@ -30,7 +30,7 @@ describe('[Unitary] Register Courier Use Case', () => {
 
     logisticsSupportsRepository.items.push(logisticsSupport);
 
-    couriersRepository = new InMemoryCouriersRepositiory();
+    couriersRepository = new InMemoryCouriersRepository();
     sut = new RegisterCourierUseCase(
       logisticsSupportsRepository,
       couriersRepository,

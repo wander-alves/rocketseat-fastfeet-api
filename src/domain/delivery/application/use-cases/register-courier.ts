@@ -1,8 +1,8 @@
 import { Courier } from '@/domain/delivery/enterprise/entities/courier';
 import { DocumentID } from '@/domain/delivery/enterprise/entities/value-objects/document-id';
 
-import { CouriersRepositiory } from '@/domain/delivery/application/repositories/couriers-repository';
-import { LogisticsSupportsRepositiory } from '../repositories/logistics-supports-repository';
+import { CouriersRepository } from '@/domain/delivery/application/repositories/couriers-repository';
+import { LogisticsSupportsRepository } from '../repositories/logistics-supports-repository';
 import { Encrypter } from '@/domain/delivery/application/cryptography/encrypter';
 
 import { AlreadyRegisteredDocumentIDError } from '@/domain/delivery/application/use-cases/errors/already-registered-document-id-error';
@@ -25,13 +25,13 @@ type RegisterCourierUseCaseResponse = Either<
 >;
 
 class RegisterCourierUseCase {
-  private logisticsSupportsRepository: LogisticsSupportsRepositiory;
-  private couriersRepository: CouriersRepositiory;
+  private logisticsSupportsRepository: LogisticsSupportsRepository;
+  private couriersRepository: CouriersRepository;
   private encrypter: Encrypter;
 
   constructor(
-    logisticsSupportsRepository: LogisticsSupportsRepositiory,
-    couriersRepository: CouriersRepositiory,
+    logisticsSupportsRepository: LogisticsSupportsRepository,
+    couriersRepository: CouriersRepository,
     encrypter: Encrypter,
   ) {
     this.logisticsSupportsRepository = logisticsSupportsRepository;

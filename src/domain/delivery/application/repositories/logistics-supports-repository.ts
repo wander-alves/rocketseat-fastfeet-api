@@ -1,6 +1,6 @@
 import { LogisticsSupport } from '@/domain/delivery/enterprise/entities/logistics-support';
 
-abstract class LogisticsSupportsRepositiory {
+abstract class LogisticsSupportsRepository {
   abstract create(logisticssupport: LogisticsSupport): Promise<void>;
   abstract findOneById(id: string): Promise<LogisticsSupport | null>;
   abstract findOneByDocumentID(
@@ -8,4 +8,4 @@ abstract class LogisticsSupportsRepositiory {
   ): Promise<LogisticsSupport | null>;
 }
 
-export { LogisticsSupportsRepositiory };
+export { LogisticsSupportsRepository };
