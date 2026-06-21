@@ -1,7 +1,7 @@
-import { CouriersRepositiory } from '@/domain/delivery/application/repositories/couriers-repository';
+import { CouriersRepository } from '@/domain/delivery/application/repositories/couriers-repository';
 import { Courier } from '@/domain/delivery/enterprise/entities/courier';
 
-class InMemoryCouriersRepositiory implements CouriersRepositiory {
+class InMemoryCouriersRepository implements CouriersRepository {
   public items: Courier[] = [];
 
   async create(courier: Courier) {
@@ -31,4 +31,4 @@ class InMemoryCouriersRepositiory implements CouriersRepositiory {
   }
 }
 
-export { InMemoryCouriersRepositiory };
+export { InMemoryCouriersRepository };

@@ -1,7 +1,7 @@
-import { LogisticsSupportsRepositiory } from '@/domain/delivery/application/repositories/logistics-supports-repository';
+import { LogisticsSupportsRepository } from '@/domain/delivery/application/repositories/logistics-supports-repository';
 import { LogisticsSupport } from '@/domain/delivery/enterprise/entities/logistics-support';
 
-class InMemoryLogisticsSupportsRepositiory implements LogisticsSupportsRepositiory {
+class InMemoryLogisticsSupportsRepository implements LogisticsSupportsRepository {
   public items: LogisticsSupport[] = [];
 
   async create(logisticssupport: LogisticsSupport) {
@@ -31,4 +31,4 @@ class InMemoryLogisticsSupportsRepositiory implements LogisticsSupportsRepositio
   }
 }
 
-export { InMemoryLogisticsSupportsRepositiory };
+export { InMemoryLogisticsSupportsRepository };
