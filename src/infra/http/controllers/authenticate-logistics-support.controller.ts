@@ -7,10 +7,10 @@ import {
 } from '@nestjs/common';
 import { z } from 'zod';
 
-import { NestAuthenticateLogisticsSupportUseCase } from '../nest-use-cases/nest-authenticate-logistics-support';
 import { InvalidCredentialError } from '@/domain/delivery/application/use-cases/errors/invalid-credential-error';
 import { Public } from '@/infra/authentication/public';
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
+import { AuthenticateLogisticsSupportUseCase } from '@/domain/delivery/application/use-cases/authenticate-logistics-support';
 
 const authenticationBodySchema = z.object({
   document: z.string(),
@@ -23,9 +23,9 @@ const validationPipe = new ZodValidationPipe(authenticationBodySchema);
 
 @Controller('/admin/signin')
 class AuthenticateLogisticsSupportController {
-  private useCase: NestAuthenticateLogisticsSupportUseCase;
+  private useCase: AuthenticateLogisticsSupportUseCase;
 
-  constructor(useCase: NestAuthenticateLogisticsSupportUseCase) {
+  constructor(useCase: AuthenticateLogisticsSupportUseCase) {
     this.useCase = useCase;
   }
 
