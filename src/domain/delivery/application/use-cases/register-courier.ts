@@ -2,13 +2,14 @@ import { Courier } from '@/domain/delivery/enterprise/entities/courier';
 import { DocumentID } from '@/domain/delivery/enterprise/entities/value-objects/document-id';
 
 import { CouriersRepository } from '@/domain/delivery/application/repositories/couriers-repository';
-import { LogisticsSupportsRepository } from '../repositories/logistics-supports-repository';
-import { Encrypter } from '@/domain/delivery/application/cryptography/encrypter';
+import { LogisticsSupportsRepository } from '@/domain/delivery/application/repositories/logistics-supports-repository';
+import { HashGenerator } from '@/domain/delivery/application/cryptography/hash-generator';
 
 import { AlreadyRegisteredDocumentIDError } from '@/domain/delivery/application/use-cases/errors/already-registered-document-id-error';
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
 import { InvalidDocumentIDError } from '@/domain/delivery/application/use-cases/errors/invalid-document-id-error';
 import { Either, left, right } from '@/core/either';
+import { Injectable } from '@nestjs/common';
 
 interface RegisterCourierUseCaseRequest {
   logisticsSupportId: string;
@@ -24,19 +25,20 @@ type RegisterCourierUseCaseResponse = Either<
   }
 >;
 
+@Injectable()
 class RegisterCourierUseCase {
   private logisticsSupportsRepository: LogisticsSupportsRepository;
   private couriersRepository: CouriersRepository;
-  private encrypter: Encrypter;
+  private hashGenerator: HashGenerator;
 
   constructor(
     logisticsSupportsRepository: LogisticsSupportsRepository,
     couriersRepository: CouriersRepository,
-    encrypter: Encrypter,
+    hashGenerator: HashGenerator,
   ) {
     this.logisticsSupportsRepository = logisticsSupportsRepository;
     this.couriersRepository = couriersRepository;
-    this.encrypter = encrypter;
+    this.hashGenerator = hashGenerator;
   }
 
   async execute({
@@ -65,7 +67,7 @@ class RegisterCourierUseCase {
       return left(new AlreadyRegisteredDocumentIDError());
     }
 
-    const hashedPassword = await this.encrypter.hash(password);
+    const hashedPassword = await this.hashGenerator.hash(password);
 
     const courier = new Courier({
       name,

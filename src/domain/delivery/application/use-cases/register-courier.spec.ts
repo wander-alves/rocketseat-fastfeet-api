@@ -6,7 +6,7 @@ import { DocumentID } from '@/domain/delivery/enterprise/entities/value-objects/
 
 import { InMemoryLogisticsSupportsRepository } from '@/../tests/database/repositories/in-memory-logistics-supports-repository';
 import { InMemoryCouriersRepository } from '@/../tests/database/repositories/in-memory-couriers-repository';
-import { FakeEncrypter } from '@/../tests/cryptography/fake-encrypter';
+import { FakeHasher } from '@/../tests/cryptography/fake-hasher';
 
 import { InvalidDocumentIDError } from '@/domain/delivery/application/use-cases/errors/invalid-document-id-error';
 import { AlreadyRegisteredDocumentIDError } from '@/domain/delivery/application/use-cases/errors/already-registered-document-id-error';
@@ -14,13 +14,13 @@ import { AlreadyRegisteredDocumentIDError } from '@/domain/delivery/application/
 describe('[Unitary] Register Courier Use Case', () => {
   let logisticsSupportsRepository: InMemoryLogisticsSupportsRepository;
   let couriersRepository: InMemoryCouriersRepository;
-  let encrypter: FakeEncrypter;
+  let hasher: FakeHasher;
   let sut: RegisterCourierUseCase;
   let logisticsSupport: LogisticsSupport;
 
   beforeEach(async () => {
     logisticsSupportsRepository = new InMemoryLogisticsSupportsRepository();
-    encrypter = new FakeEncrypter();
+    hasher = new FakeHasher();
 
     logisticsSupport = new LogisticsSupport({
       name: 'master',
@@ -34,7 +34,7 @@ describe('[Unitary] Register Courier Use Case', () => {
     sut = new RegisterCourierUseCase(
       logisticsSupportsRepository,
       couriersRepository,
-      encrypter,
+      hasher,
     );
   });
 

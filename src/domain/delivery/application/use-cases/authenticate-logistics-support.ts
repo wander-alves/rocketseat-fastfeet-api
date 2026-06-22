@@ -3,6 +3,8 @@ import { Encrypter } from '@/domain/delivery/application/cryptography/encrypter'
 
 import { Either, left, right } from '@/core/either';
 import { InvalidCredentialError } from '@/domain/delivery/application/use-cases/errors/invalid-credential-error';
+import { HashComparer } from '../cryptography/hash-comparer';
+import { Injectable } from '@nestjs/common';
 
 interface AuthenticateLogisticsSupportUseCaseRequest {
   document: string;
@@ -16,16 +18,20 @@ type AuthenticateLogisticsSupportUseCaseResponse = Either<
   }
 >;
 
+@Injectable()
 class AuthenticateLogisticsSupportUseCase {
   private logisticsSupportsRepository: LogisticsSupportsRepository;
   private encrypter: Encrypter;
+  private hashComparer: HashComparer;
 
   constructor(
     logisticsSupportsRepository: LogisticsSupportsRepository,
     encrypter: Encrypter,
+    hashComparer: HashComparer,
   ) {
     this.logisticsSupportsRepository = logisticsSupportsRepository;
     this.encrypter = encrypter;
+    this.hashComparer = hashComparer;
   }
 
   async execute({
@@ -39,7 +45,7 @@ class AuthenticateLogisticsSupportUseCase {
       return left(new InvalidCredentialError());
     }
 
-    const doesPasswordMatch = await this.encrypter.compare(
+    const doesPasswordMatch = await this.hashComparer.compare(
       password,
       logisticsSupport.password,
     );

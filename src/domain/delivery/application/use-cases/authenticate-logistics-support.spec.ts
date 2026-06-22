@@ -8,19 +8,23 @@ import { AuthenticateLogisticsSupportUseCase } from '@/domain/delivery/applicati
 import { InvalidCredentialError } from '@/domain/delivery/application/use-cases/errors/invalid-credential-error';
 
 import { FakeEncrypter } from '@/../tests/cryptography/fake-encrypter';
+import { FakeHasher } from '@/../tests/cryptography/fake-hasher';
 import { InMemoryLogisticsSupportsRepository } from '@/../tests/database/repositories/in-memory-logistics-supports-repository';
 
 describe('[Unatary] Authenticate Logistics Support Use Case', () => {
   let logisticsSupportsRepository: InMemoryLogisticsSupportsRepository;
   let encrypter: FakeEncrypter;
+  let hasher: FakeHasher;
   let sut: AuthenticateLogisticsSupportUseCase;
 
   beforeEach(async () => {
     logisticsSupportsRepository = new InMemoryLogisticsSupportsRepository();
     encrypter = new FakeEncrypter();
+    hasher = new FakeHasher();
     sut = new AuthenticateLogisticsSupportUseCase(
       logisticsSupportsRepository,
       encrypter,
+      hasher,
     );
   });
 
@@ -28,7 +32,7 @@ describe('[Unatary] Authenticate Logistics Support Use Case', () => {
     const logisticsSupport = new LogisticsSupport(
       {
         name: 'John Doe',
-        password: await encrypter.hash('strong'),
+        password: await hasher.hash('strong'),
         documentID: new DocumentID('111.222.333-44'),
       },
       new UniqueEntityID('id-01'),
@@ -51,7 +55,7 @@ describe('[Unatary] Authenticate Logistics Support Use Case', () => {
     const logisticsSupport = new LogisticsSupport(
       {
         name: 'John Doe',
-        password: await encrypter.hash('strong'),
+        password: await hasher.hash('strong'),
         documentID: new DocumentID('111.222.333-44'),
       },
       new UniqueEntityID('id-01'),
@@ -72,7 +76,7 @@ describe('[Unatary] Authenticate Logistics Support Use Case', () => {
     const logisticsSupport = new LogisticsSupport(
       {
         name: 'John Doe',
-        password: await encrypter.hash('strong'),
+        password: await hasher.hash('strong'),
         documentID: new DocumentID('111.222.333-44'),
       },
       new UniqueEntityID('id-01'),
