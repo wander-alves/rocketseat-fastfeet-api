@@ -1,6 +1,9 @@
 import { hash, compare } from 'bcryptjs';
 
-class BcryptService {
+import { HashComparer } from '@/domain/delivery/application/cryptography/hash-comparer';
+import { HashGenerator } from '@/domain/delivery/application/cryptography/hash-generator';
+
+class BcryptService implements HashGenerator, HashComparer {
   private HASH_SALT_LENGTH = 8;
 
   async hash(plainText: string) {
