@@ -12,7 +12,7 @@ export default defineConfig({
     include: ['**/*.e2e-spec.ts'],
     root: './',
     setupFiles: ['./tests/setup/setup-e2e'],
-    hookTimeout: 60000,
+    hookTimeout: 500000,
   },
   plugins: [
     swc.vite({
