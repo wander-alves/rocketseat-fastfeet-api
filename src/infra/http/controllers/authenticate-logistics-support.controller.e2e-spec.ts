@@ -21,13 +21,15 @@ describe('[E2E] Authenticate Logistics Support Controller', () => {
     await app.init();
   });
 
-  test('[POST] /admin/signin', async () => {
+  test('[POST] /api/admin/signin', async () => {
     const httpServer = app.getHttpServer();
 
-    const response = await httpClient(httpServer).post('/admin/signin').send({
-      document: '999.999.999-01',
-      password: 'admin01',
-    });
+    const response = await httpClient(httpServer)
+      .post('/api/admin/signin')
+      .send({
+        document: '999.999.999-01',
+        password: 'admin01',
+      });
 
     expect(response.statusCode).toBe(201);
     expect(response.body).toMatchObject({

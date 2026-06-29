@@ -17,11 +17,11 @@ const authenticationBodySchema = z.object({
   password: z.string(),
 });
 
-type AuthetnicationBodySchema = z.infer<typeof authenticationBodySchema>;
+type AuthenticationBody = z.infer<typeof authenticationBodySchema>;
 
 const validationPipe = new ZodValidationPipe(authenticationBodySchema);
 
-@Controller('/admin/signin')
+@Controller('/api/admin/signin')
 class AuthenticateLogisticsSupportController {
   private useCase: AuthenticateLogisticsSupportUseCase;
 
@@ -31,8 +31,7 @@ class AuthenticateLogisticsSupportController {
 
   @Post()
   @Public()
-  async handle(@Body(validationPipe) body: AuthetnicationBodySchema) {
-    console.log(process.env.DATABASE_URL);
+  async handle(@Body(validationPipe) body: AuthenticationBody) {
     const { document, password } = body;
     const result = await this.useCase.execute({
       document,

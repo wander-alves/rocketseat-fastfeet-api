@@ -3,8 +3,11 @@ import { Module } from '@nestjs/common';
 import { EnvModule } from '@/infra/env/env.module';
 import { PrismaService } from '@/infra/database/prisma.service';
 
-import { PrismaLogisticsSupportsRepository } from '@/infra/database/prisma/repositories/prisma-logistics-supports-repository';
 import { LogisticsSupportsRepository } from '@/domain/delivery/application/repositories/logistics-supports-repository';
+import { CouriersRepository } from '@/domain/delivery/application/repositories/couriers-repository';
+
+import { PrismaLogisticsSupportsRepository } from '@/infra/database/prisma/repositories/prisma-logistics-supports-repository';
+import { PrismaCouriersRepository } from '@/infra/database/prisma/repositories/prisma-couriers-repository';
 
 @Module({
   imports: [EnvModule],
@@ -14,8 +17,12 @@ import { LogisticsSupportsRepository } from '@/domain/delivery/application/repos
       provide: LogisticsSupportsRepository,
       useClass: PrismaLogisticsSupportsRepository,
     },
+    {
+      provide: CouriersRepository,
+      useClass: PrismaCouriersRepository,
+    },
   ],
-  exports: [PrismaService, LogisticsSupportsRepository],
+  exports: [PrismaService, LogisticsSupportsRepository, CouriersRepository],
 })
 class DatabaseModule {}
 

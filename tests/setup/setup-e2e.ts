@@ -6,8 +6,8 @@ import { execSync } from 'node:child_process';
 import { envSchema } from '@/infra/env/env';
 
 import { PrismaPg } from '@prisma/adapter-pg';
-import { PrismaClient } from '../../prisma/generated/client/client';
-import { seed } from './seed';
+import { PrismaClient } from '@/../prisma/generated/client/client';
+import { seed } from '@/../tests/setup/seed';
 
 config({ path: '.env', override: true });
 config({ path: '.env.test', override: true });

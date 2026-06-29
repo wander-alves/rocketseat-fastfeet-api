@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
 import { envSchema } from '@/infra/env/env';
-import { AuthenticationModule } from './authentication/authentication.module';
-import { HttpModule } from './http/http.module';
+import { AuthenticationModule } from '@/infra/authentication/authentication.module';
+import { HttpModule } from '@/infra/http/http.module';
 
 @Module({
   imports: [
