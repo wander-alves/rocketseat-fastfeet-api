@@ -1,0 +1,18 @@
+services:
+  postgres:
+    container_name: fastfeet-api-pg
+    image: postgres:16.0-alpine3.18
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: test_env
+      POSTGRES_PASSWORD: testing
+      POSTGRES_DB: fastfeet-dev-db
+      PGDATA: ./data/postgres
+
+  redis:
+    container_name: fastfeet-api-redis
+    image: redis
+    privileged: true
+    ports:
+      - 6379:6379
