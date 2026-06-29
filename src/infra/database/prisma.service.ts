@@ -12,15 +12,14 @@ class PrismaService
   constructor(envService: EnvService) {
     const databaseURLEnv = envService.get('DATABASE_URL');
     const databaseURL = new URL(databaseURLEnv);
-    const databaseURLSchema = databaseURL.searchParams.get('schema');
+    const connectionString = databaseURL.toString();
+    const schema = databaseURL.searchParams.get('schema') ?? 'public';
 
     const adapter = new PrismaPg(
       {
-        connectionString: databaseURL.toString(),
+        connectionString,
       },
-      {
-        schema: databaseURLSchema || 'public',
-      },
+      { schema },
     );
 
     super({
