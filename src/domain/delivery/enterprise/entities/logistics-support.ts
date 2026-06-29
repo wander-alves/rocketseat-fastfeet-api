@@ -70,4 +70,4 @@ class LogisticsSupport extends Entity<ILogisticsSupport> {
   }
 }
 
-export { LogisticsSupport };
+export { LogisticsSupport, type ILogisticsSupport };

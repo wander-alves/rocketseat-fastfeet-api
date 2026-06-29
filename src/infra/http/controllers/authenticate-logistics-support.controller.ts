@@ -32,8 +32,8 @@ class AuthenticateLogisticsSupportController {
   @Post()
   @Public()
   async handle(@Body(validationPipe) body: AuthetnicationBodySchema) {
+    console.log(process.env.DATABASE_URL);
     const { document, password } = body;
-
     const result = await this.useCase.execute({
       document,
       password,
