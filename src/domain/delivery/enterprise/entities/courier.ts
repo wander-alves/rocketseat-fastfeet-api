@@ -1,7 +1,7 @@
 import { Entity } from '@/core/entities/entity';
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
-import { DocumentID } from './value-objects/document-id';
 import { Optional } from '@/core/types/optional';
+import { DocumentID } from '@/domain/delivery/enterprise/entities/value-objects/document-id';
 
 interface ICourier {
   name: string;
