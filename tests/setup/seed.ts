@@ -1,4 +1,5 @@
 import { hash } from 'bcryptjs';
+
 import { prismaClient } from '@/../tests/setup/setup-e2e';
 
 async function seed() {

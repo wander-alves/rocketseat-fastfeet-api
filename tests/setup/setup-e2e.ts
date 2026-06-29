@@ -3,23 +3,23 @@ import { config } from 'dotenv';
 import { randomUUID } from 'node:crypto';
 import { execSync } from 'node:child_process';
 
-import { PrismaPg } from '@prisma/adapter-pg';
-
-import { PrismaClient } from '@/../prisma/generated/client/client';
 import { envSchema } from '@/infra/env/env';
 
+import { PrismaPg } from '@prisma/adapter-pg';
+import { PrismaClient } from '../../prisma/generated/client/client';
+import { seed } from './seed';
+
 config({ path: '.env', override: true });
-config({ path: '.env.test.local', override: true });
+config({ path: '.env.test', override: true });
 
 const env = envSchema.parse(process.env);
 const databaseURL = new URL(env.DATABASE_URL);
-const schemaID = randomUUID();
 
-const adapter = new PrismaPg({
+let adapter: PrismaPg = new PrismaPg({
   connectionString: databaseURL.toString(),
 });
 
-export const prismaClient = new PrismaClient({ adapter });
+let prismaClient: PrismaClient = new PrismaClient({ adapter });
 
 function generateDatabaseURL(schemaID: string) {
   databaseURL.searchParams.set('schema', schemaID);
@@ -27,13 +27,23 @@ function generateDatabaseURL(schemaID: string) {
   return databaseURL.toString();
 }
 
+const schemaID = randomUUID();
+
 beforeAll(async () => {
   const randomDatabaseURL = generateDatabaseURL(schemaID);
 
+  adapter = new PrismaPg(
+    {
+      connectionString: databaseURL.toString(),
+    },
+    { schema: schemaID },
+  );
+
+  prismaClient = new PrismaClient({ adapter });
   process.env.DATABASE_URL = randomDatabaseURL;
 
   execSync('npx prisma migrate deploy');
-  console.log(process.env.DATABASE_URL);
+  await seed();
 });
 
 afterAll(async () => {
@@ -42,3 +52,5 @@ afterAll(async () => {
   );
   await prismaClient.$disconnect();
 });
+
+export { prismaClient };
