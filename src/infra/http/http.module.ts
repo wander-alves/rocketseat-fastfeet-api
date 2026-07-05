@@ -7,14 +7,21 @@ import { AuthenticateLogisticsSupportController } from '@/infra/http/controllers
 import { AuthenticateLogisticsSupportUseCase } from '@/domain/delivery/application/use-cases/authenticate-logistics-support';
 import { RegisterCourierController } from '@/infra/http/controllers/register-courier.controller';
 import { RegisterCourierUseCase } from '@/domain/delivery/application/use-cases/register-courier';
+import { AuthenticateCourierController } from './controllers/authenticate-couriers.controller';
+import { AuthenticateCourierUseCase } from '@/domain/delivery/application/use-cases/authenticate-courier';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
   controllers: [
+    AuthenticateCourierController,
     AuthenticateLogisticsSupportController,
     RegisterCourierController,
   ],
-  providers: [AuthenticateLogisticsSupportUseCase, RegisterCourierUseCase],
+  providers: [
+    AuthenticateCourierUseCase,
+    AuthenticateLogisticsSupportUseCase,
+    RegisterCourierUseCase,
+  ],
 })
 class HttpModule {}
 
