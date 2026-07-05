@@ -10,7 +10,7 @@ datasource db {
 
 enum UserRole {
   COURIER
-  LOGISTICS_SUPPORT
+  LOGISTICSSUPPORT
 }
 
 model User {
