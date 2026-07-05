@@ -1,3 +1,5 @@
+import { Injectable } from '@nestjs/common';
+
 import { Courier } from '@/domain/delivery/enterprise/entities/courier';
 import { DocumentID } from '@/domain/delivery/enterprise/entities/value-objects/document-id';
 
@@ -5,11 +7,10 @@ import { CouriersRepository } from '@/domain/delivery/application/repositories/c
 import { LogisticsSupportsRepository } from '@/domain/delivery/application/repositories/logistics-supports-repository';
 import { HashGenerator } from '@/domain/delivery/application/cryptography/hash-generator';
 
-import { AlreadyRegisteredDocumentIDError } from '@/domain/delivery/application/use-cases/errors/already-registered-document-id-error';
-import { NotAllowedError } from '@/core/errors/not-allowed-error';
-import { InvalidDocumentIDError } from '@/domain/delivery/application/use-cases/errors/invalid-document-id-error';
 import { Either, left, right } from '@/core/either';
-import { Injectable } from '@nestjs/common';
+import { NotAllowedError } from '@/core/errors/not-allowed-error';
+import { AlreadyRegisteredDocumentIDError } from '@/domain/delivery/application/use-cases/errors/already-registered-document-id-error';
+import { InvalidDocumentIDError } from '@/domain/delivery/application/use-cases/errors/invalid-document-id-error';
 
 interface RegisterCourierUseCaseRequest {
   logisticsSupportId: string;
