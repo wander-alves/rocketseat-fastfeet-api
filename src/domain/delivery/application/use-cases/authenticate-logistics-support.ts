@@ -1,10 +1,11 @@
+import { Injectable } from '@nestjs/common';
+
 import { LogisticsSupportsRepository } from '@/domain/delivery/application/repositories/logistics-supports-repository';
 import { Encrypter } from '@/domain/delivery/application/cryptography/encrypter';
+import { HashComparer } from '@/domain/delivery/application/cryptography/hash-comparer';
 
 import { Either, left, right } from '@/core/either';
 import { InvalidCredentialError } from '@/domain/delivery/application/use-cases/errors/invalid-credential-error';
-import { HashComparer } from '../cryptography/hash-comparer';
-import { Injectable } from '@nestjs/common';
 
 interface AuthenticateLogisticsSupportUseCaseRequest {
   document: string;
@@ -54,8 +55,11 @@ class AuthenticateLogisticsSupportUseCase {
       return left(new InvalidCredentialError());
     }
 
+    const role = logisticsSupport.constructor.name.toUpperCase();
+
     const accessToken = await this.encrypter.encrypt({
       sub: logisticsSupport.id.value,
+      role,
     });
 
     return right({

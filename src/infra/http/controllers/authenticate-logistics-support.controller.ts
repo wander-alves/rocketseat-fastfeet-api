@@ -33,6 +33,7 @@ class AuthenticateLogisticsSupportController {
   @Public()
   async handle(@Body(validationPipe) body: AuthenticationBody) {
     const { document, password } = body;
+
     const result = await this.useCase.execute({
       document,
       password,

@@ -11,7 +11,7 @@ import { FakeEncrypter } from '@/../tests/cryptography/fake-encrypter';
 import { FakeHasher } from '@/../tests/cryptography/fake-hasher';
 import { InMemoryLogisticsSupportsRepository } from '@/../tests/database/repositories/in-memory-logistics-supports-repository';
 
-describe('[Unatary] Authenticate Logistics Support Use Case', () => {
+describe('[Unitary] Authenticate Logistics Support Use Case', () => {
   let logisticsSupportsRepository: InMemoryLogisticsSupportsRepository;
   let encrypter: FakeEncrypter;
   let hasher: FakeHasher;
@@ -46,9 +46,13 @@ describe('[Unatary] Authenticate Logistics Support Use Case', () => {
     });
 
     expect(result.isRight()).toBe(true);
-    expect(result.value).toMatchObject({
-      accessToken: expect.any(String),
-    });
+    if (result.isRight()) {
+      const { accessToken } = result.value;
+      expect(JSON.parse(accessToken)).toMatchObject({
+        sub: expect.any(String),
+        role: 'LOGISTICSSUPPORT',
+      });
+    }
   });
 
   it('should not be able to authenticate a logistics support account with invalid document', async () => {

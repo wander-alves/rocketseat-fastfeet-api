@@ -4,15 +4,13 @@ import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import httpClient from 'supertest';
 
-import { DatabaseModule } from '@/infra/database/database.module';
-
 describe('[E2E] Authenticate Logistics Support Controller', () => {
   let app: INestApplication;
 
   beforeAll(async () => {
     const { AppModule } = await import('@/infra/app.module.js');
     const moduleRef = await Test.createTestingModule({
-      imports: [AppModule, DatabaseModule],
+      imports: [AppModule],
       providers: [],
     }).compile();
 
