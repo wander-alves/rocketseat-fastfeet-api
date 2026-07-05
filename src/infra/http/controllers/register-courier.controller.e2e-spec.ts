@@ -4,38 +4,49 @@ import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import httpClient from 'supertest';
 
-import { DatabaseModule } from '@/infra/database/database.module';
 import { JwtEncryter } from '@/infra/cryptography/jwt-encrypter';
 import { PrismaService } from '@/infra/database/prisma.service';
+import { BcryptService } from '@/infra/cryptography/bcrypt.service';
 
 describe('[E2E] Register Courier Controller', () => {
   let app: INestApplication;
   let prisma: PrismaService;
+  let bcrypt: BcryptService;
   let jwt: JwtEncryter;
 
   beforeAll(async () => {
     const { AppModule } = await import('@/infra/app.module.js');
     const moduleRef = await Test.createTestingModule({
-      imports: [AppModule, DatabaseModule],
-      providers: [JwtEncryter],
+      imports: [AppModule],
+      providers: [JwtEncryter, BcryptService],
     }).compile();
 
     app = moduleRef.createNestApplication();
     prisma = moduleRef.get(PrismaService);
+    bcrypt = moduleRef.get(BcryptService);
     jwt = moduleRef.get(JwtEncryter);
 
     await app.init();
   });
 
   test('[POST] /api/accounts/couriers', async () => {
-    const logisticsSupport = await prisma.user.findFirst({
-      where: {
-        name: 'Admin01',
+    const user = await prisma.user.create({
+      data: {
+        name: 'John Doe',
+        password: await bcrypt.hash('strong'),
+        documentID: '111.222.333-46',
       },
     });
 
+    // const logisticsSupport = await prisma.user.findFirst({
+    //   where: {
+    //     name: 'Admin01',
+    //   },
+    // });
+
     const accessToken = await jwt.encrypt({
-      sub: logisticsSupport?.id,
+      sub: user.id,
+      role: 'LOGISTICSSUPPORT',
     });
 
     const httpServer = app.getHttpServer();

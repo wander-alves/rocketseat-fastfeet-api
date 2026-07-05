@@ -17,6 +17,7 @@ import { RegisterCourierUseCase } from '@/domain/delivery/application/use-cases/
 import { AlreadyRegisteredDocumentIDError } from '@/domain/delivery/application/use-cases/errors/already-registered-document-id-error';
 import { InvalidCredentialError } from '@/domain/delivery/application/use-cases/errors/invalid-credential-error';
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
+import { Roles, Role } from '@/infra/authentication/roles';
 
 const registerCourierBodySchema = z.object({
   name: z.string(),
@@ -37,6 +38,7 @@ class RegisterCourierController {
   }
 
   @Post()
+  @Roles(Role.ADMIN)
   async handle(
     @Body(validationPipe) body: RegisterCourierBody,
     @UserTokenDecorator() user: TokenPayload,
