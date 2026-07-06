@@ -11,7 +11,6 @@ import { BcryptService } from '@/infra/cryptography/bcrypt.service';
 describe('[E2E] Register Courier Controller', () => {
   let app: INestApplication;
   let prisma: PrismaService;
-  let bcrypt: BcryptService;
   let jwt: JwtEncryter;
 
   beforeAll(async () => {
@@ -23,29 +22,20 @@ describe('[E2E] Register Courier Controller', () => {
 
     app = moduleRef.createNestApplication();
     prisma = moduleRef.get(PrismaService);
-    bcrypt = moduleRef.get(BcryptService);
     jwt = moduleRef.get(JwtEncryter);
 
     await app.init();
   });
 
   test('[POST] /api/accounts/couriers', async () => {
-    const user = await prisma.user.create({
-      data: {
-        name: 'John Doe',
-        password: await bcrypt.hash('strong'),
-        documentID: '111.222.333-46',
+    const user = await prisma.user.findFirst({
+      where: {
+        name: 'Admin01',
       },
     });
 
-    // const logisticsSupport = await prisma.user.findFirst({
-    //   where: {
-    //     name: 'Admin01',
-    //   },
-    // });
-
     const accessToken = await jwt.encrypt({
-      sub: user.id,
+      sub: user?.id,
       role: 'LOGISTICSSUPPORT',
     });
 
