@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "UserRole" AS ENUM ('COURIER', 'LOGISTICS_SUPPORT');
+CREATE TYPE "UserRole" AS ENUM ('COURIER', 'LOGISTICSSUPPORT');
 
 -- CreateTable
 CREATE TABLE "users" (
