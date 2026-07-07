@@ -2,34 +2,34 @@ import { describe, beforeEach, it, expect } from 'vitest';
 
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { DocumentID } from '@/domain/delivery/enterprise/entities/value-objects/document-id';
-import { LogisticsSupport } from '@/domain/delivery/enterprise/entities/logistics-support';
-import { AuthenticateLogisticsSupportUseCase } from '@/domain/delivery/application/use-cases/authenticate-logistics-support';
+import { Recipient } from '../../enterprise/entities/recipient';
+import { AuthenticateRecipientUseCase } from '@/domain/delivery/application/use-cases/authenticate-recipient';
 
 import { InvalidCredentialError } from '@/domain/delivery/application/use-cases/errors/invalid-credential-error';
 
 import { FakeEncrypter } from '@/../tests/cryptography/fake-encrypter';
 import { FakeHasher } from '@/../tests/cryptography/fake-hasher';
-import { InMemoryLogisticsSupportsRepository } from '@/../tests/database/repositories/in-memory-logistics-supports-repository';
+import { InMemoryRecipientsRepository } from '@/../tests/database/repositories/in-memory-recipients-repository';
 
-describe('[Unitary] Authenticate Logistics Support Use Case', () => {
-  let logisticsSupportsRepository: InMemoryLogisticsSupportsRepository;
+describe('[Unitary] Authenticate Recipient Use Case', () => {
+  let recipientsRepository: InMemoryRecipientsRepository;
   let encrypter: FakeEncrypter;
   let hasher: FakeHasher;
-  let sut: AuthenticateLogisticsSupportUseCase;
+  let sut: AuthenticateRecipientUseCase;
 
   beforeEach(async () => {
-    logisticsSupportsRepository = new InMemoryLogisticsSupportsRepository();
+    recipientsRepository = new InMemoryRecipientsRepository();
     encrypter = new FakeEncrypter();
     hasher = new FakeHasher();
-    sut = new AuthenticateLogisticsSupportUseCase(
-      logisticsSupportsRepository,
+    sut = new AuthenticateRecipientUseCase(
+      recipientsRepository,
       encrypter,
       hasher,
     );
   });
 
-  it('should be able to authenticate a logistics support account', async () => {
-    const logisticsSupport = new LogisticsSupport(
+  it('should be able to authenticate a recipient account', async () => {
+    const recipient = new Recipient(
       {
         name: 'John Doe',
         password: await hasher.hash('strong'),
@@ -38,7 +38,7 @@ describe('[Unitary] Authenticate Logistics Support Use Case', () => {
       new UniqueEntityID('id-01'),
     );
 
-    await logisticsSupportsRepository.create(logisticsSupport);
+    await recipientsRepository.create(recipient);
 
     const result = await sut.execute({
       document: '111.222.333-44',
@@ -46,17 +46,18 @@ describe('[Unitary] Authenticate Logistics Support Use Case', () => {
     });
 
     expect(result.isRight()).toBe(true);
+
     if (result.isRight()) {
       const { accessToken } = result.value;
       expect(JSON.parse(accessToken)).toMatchObject({
         sub: expect.any(String),
-        role: 'LOGISTICSSUPPORT',
+        role: 'RECIPIENT',
       });
     }
   });
 
-  it('should not be able to authenticate a logistics support account with invalid document', async () => {
-    const logisticsSupport = new LogisticsSupport(
+  it('should not be able to authenticate a recipient account with invalid document', async () => {
+    const recipient = new Recipient(
       {
         name: 'John Doe',
         password: await hasher.hash('strong'),
@@ -65,7 +66,7 @@ describe('[Unitary] Authenticate Logistics Support Use Case', () => {
       new UniqueEntityID('id-01'),
     );
 
-    await logisticsSupportsRepository.create(logisticsSupport);
+    await recipientsRepository.create(recipient);
 
     const result = await sut.execute({
       document: '111.222.333-43',
@@ -76,8 +77,8 @@ describe('[Unitary] Authenticate Logistics Support Use Case', () => {
     expect(result.value).toBeInstanceOf(InvalidCredentialError);
   });
 
-  it('should not be able to authenticate a logistics support account with invalid password', async () => {
-    const logisticsSupport = new LogisticsSupport(
+  it('should not be able to authenticate a recipient account with invalid password', async () => {
+    const recipient = new Recipient(
       {
         name: 'John Doe',
         password: await hasher.hash('strong'),
@@ -86,7 +87,7 @@ describe('[Unitary] Authenticate Logistics Support Use Case', () => {
       new UniqueEntityID('id-01'),
     );
 
-    await logisticsSupportsRepository.create(logisticsSupport);
+    await recipientsRepository.create(recipient);
 
     const result = await sut.execute({
       document: '111.222.333-44',

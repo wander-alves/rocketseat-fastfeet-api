@@ -1,18 +1,18 @@
 import { Injectable } from '@nestjs/common';
 
-import { LogisticsSupportsRepository } from '@/domain/delivery/application/repositories/logistics-supports-repository';
+import { CouriersRepository } from '@/domain/delivery/application/repositories/couriers-repository';
 import { Encrypter } from '@/domain/delivery/application/cryptography/encrypter';
 import { HashComparer } from '@/domain/delivery/application/cryptography/hash-comparer';
 
 import { Either, left, right } from '@/core/either';
 import { InvalidCredentialError } from '@/domain/delivery/application/use-cases/errors/invalid-credential-error';
 
-interface AuthenticateLogisticsSupportUseCaseRequest {
+interface AuthenticateCourierUseCaseRequest {
   document: string;
   password: string;
 }
 
-type AuthenticateLogisticsSupportUseCaseResponse = Either<
+type AuthenticateCourierUseCaseResponse = Either<
   InvalidCredentialError,
   {
     accessToken: string;
@@ -20,17 +20,17 @@ type AuthenticateLogisticsSupportUseCaseResponse = Either<
 >;
 
 @Injectable()
-class AuthenticateLogisticsSupportUseCase {
-  private logisticsSupportsRepository: LogisticsSupportsRepository;
+class AuthenticateCourierUseCase {
+  private couriersRepository: CouriersRepository;
   private encrypter: Encrypter;
   private hashComparer: HashComparer;
 
   constructor(
-    logisticsSupportsRepository: LogisticsSupportsRepository,
+    couriersRepository: CouriersRepository,
     encrypter: Encrypter,
     hashComparer: HashComparer,
   ) {
-    this.logisticsSupportsRepository = logisticsSupportsRepository;
+    this.couriersRepository = couriersRepository;
     this.encrypter = encrypter;
     this.hashComparer = hashComparer;
   }
@@ -38,27 +38,26 @@ class AuthenticateLogisticsSupportUseCase {
   async execute({
     document,
     password,
-  }: AuthenticateLogisticsSupportUseCaseRequest): Promise<AuthenticateLogisticsSupportUseCaseResponse> {
-    const logisticsSupport =
-      await this.logisticsSupportsRepository.findOneByDocumentID(document);
+  }: AuthenticateCourierUseCaseRequest): Promise<AuthenticateCourierUseCaseResponse> {
+    const courier = await this.couriersRepository.findOneByDocumentID(document);
 
-    if (!logisticsSupport) {
+    if (!courier) {
       return left(new InvalidCredentialError());
     }
 
     const doesPasswordMatch = await this.hashComparer.compare(
       password,
-      logisticsSupport.password,
+      courier.password,
     );
 
     if (!doesPasswordMatch) {
       return left(new InvalidCredentialError());
     }
 
-    const role = logisticsSupport.constructor.name.toUpperCase();
+    const role = courier.constructor.name.toUpperCase();
 
     const accessToken = await this.encrypter.encrypt({
-      sub: logisticsSupport.id.value,
+      sub: courier.id.value,
       role,
     });
 
@@ -67,5 +66,4 @@ class AuthenticateLogisticsSupportUseCase {
     });
   }
 }
-
-export { AuthenticateLogisticsSupportUseCase };
+export { AuthenticateCourierUseCase };

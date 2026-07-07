@@ -7,7 +7,6 @@ import { envSchema } from '@/infra/env/env';
 
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '@/../prisma/generated/client/client';
-import { seed } from '@/../tests/setup/seed';
 
 config({ path: '.env', override: true });
 config({ path: '.env.test', override: true });
@@ -43,7 +42,7 @@ beforeAll(async () => {
   process.env.DATABASE_URL = randomDatabaseURL;
 
   execSync('npx prisma migrate deploy');
-  await seed();
+  execSync('npx prisma db seed');
 });
 
 afterAll(async () => {

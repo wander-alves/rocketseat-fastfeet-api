@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 
-import { Courier } from '@/domain/delivery/enterprise/entities/courier';
+import { Recipient } from '@/domain/delivery/enterprise/entities/recipient';
 import { DocumentID } from '@/domain/delivery/enterprise/entities/value-objects/document-id';
 
-import { CouriersRepository } from '@/domain/delivery/application/repositories/couriers-repository';
+import { RecipientsRepository } from '@/domain/delivery/application/repositories/recipients-repository';
 import { LogisticsSupportsRepository } from '@/domain/delivery/application/repositories/logistics-supports-repository';
 import { HashGenerator } from '@/domain/delivery/application/cryptography/hash-generator';
 
@@ -12,33 +12,33 @@ import { NotAllowedError } from '@/core/errors/not-allowed-error';
 import { AlreadyRegisteredDocumentIDError } from '@/domain/delivery/application/use-cases/errors/already-registered-document-id-error';
 import { InvalidDocumentIDError } from '@/domain/delivery/application/use-cases/errors/invalid-document-id-error';
 
-interface RegisterCourierUseCaseRequest {
+interface RegisterRecipientUseCaseRequest {
   logisticsSupportId: string;
   name: string;
   document: string;
   password: string;
 }
 
-type RegisterCourierUseCaseResponse = Either<
+type RegisterRecipientUseCaseResponse = Either<
   NotAllowedError | InvalidDocumentIDError | AlreadyRegisteredDocumentIDError,
   {
-    courier: Courier;
+    recipient: Recipient;
   }
 >;
 
 @Injectable()
-class RegisterCourierUseCase {
+class RegisterRecipientUseCase {
   private logisticsSupportsRepository: LogisticsSupportsRepository;
-  private couriersRepository: CouriersRepository;
+  private recipientsRepository: RecipientsRepository;
   private hashGenerator: HashGenerator;
 
   constructor(
     logisticsSupportsRepository: LogisticsSupportsRepository,
-    couriersRepository: CouriersRepository,
+    recipientsRepository: RecipientsRepository,
     hashGenerator: HashGenerator,
   ) {
     this.logisticsSupportsRepository = logisticsSupportsRepository;
-    this.couriersRepository = couriersRepository;
+    this.recipientsRepository = recipientsRepository;
     this.hashGenerator = hashGenerator;
   }
 
@@ -47,7 +47,7 @@ class RegisterCourierUseCase {
     name,
     document,
     password,
-  }: RegisterCourierUseCaseRequest): Promise<RegisterCourierUseCaseResponse> {
+  }: RegisterRecipientUseCaseRequest): Promise<RegisterRecipientUseCaseResponse> {
     const logisticsSupport =
       await this.logisticsSupportsRepository.findOneById(logisticsSupportId);
 
@@ -61,27 +61,27 @@ class RegisterCourierUseCase {
 
     const documentID = new DocumentID(document);
 
-    const alreadyExistentCourier =
-      await this.couriersRepository.findOneByDocumentID(document);
+    const alreadyExistentRecipient =
+      await this.recipientsRepository.findOneByDocumentID(document);
 
-    if (alreadyExistentCourier) {
+    if (alreadyExistentRecipient) {
       return left(new AlreadyRegisteredDocumentIDError());
     }
 
     const hashedPassword = await this.hashGenerator.hash(password);
 
-    const courier = new Courier({
+    const recipient = new Recipient({
       name,
       documentID,
       password: hashedPassword,
     });
 
-    await this.couriersRepository.create(courier);
+    await this.recipientsRepository.create(recipient);
 
     return right({
-      courier,
+      recipient,
     });
   }
 }
 
-export { RegisterCourierUseCase };
+export { RegisterRecipientUseCase };

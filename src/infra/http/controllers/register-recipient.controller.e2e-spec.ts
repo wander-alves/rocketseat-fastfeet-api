@@ -8,7 +8,7 @@ import { JwtEncryter } from '@/infra/cryptography/jwt-encrypter';
 import { PrismaService } from '@/infra/database/prisma.service';
 import { BcryptService } from '@/infra/cryptography/bcrypt.service';
 
-describe('[E2E] Register Courier Controller', () => {
+describe('[E2E] Register Recipient Controller', () => {
   let app: INestApplication;
   let prisma: PrismaService;
   let jwt: JwtEncryter;
@@ -27,7 +27,7 @@ describe('[E2E] Register Courier Controller', () => {
     await app.init();
   });
 
-  test('[POST] /api/accounts/couriers', async () => {
+  test('[POST] /api/accounts/recipients', async () => {
     const user = await prisma.user.findFirst({
       where: {
         name: 'Admin01',
@@ -42,18 +42,18 @@ describe('[E2E] Register Courier Controller', () => {
     const httpServer = app.getHttpServer();
 
     const response = await httpClient(httpServer)
-      .post('/api/accounts/couriers')
+      .post('/api/accounts/recipients')
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
-        name: 'master',
-        password: 'ofputtets',
+        name: 'Jane Doe',
+        password: 'somepasstoword',
         document: '111.222.333-44',
       });
 
     expect(response.statusCode).toBe(201);
-    expect(response.body.courier).toEqual({
+    expect(response.body.recipient).toEqual({
       id: expect.any(String),
-      name: 'master',
+      name: 'Jane Doe',
       document: '111.222.333-44',
     });
   });

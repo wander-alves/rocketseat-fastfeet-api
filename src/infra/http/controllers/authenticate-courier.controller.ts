@@ -10,7 +10,7 @@ import { z } from 'zod';
 import { InvalidCredentialError } from '@/domain/delivery/application/use-cases/errors/invalid-credential-error';
 import { Public } from '@/infra/authentication/public';
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
-import { AuthenticateLogisticsSupportUseCase } from '@/domain/delivery/application/use-cases/authenticate-logistics-support';
+import { AuthenticateCourierUseCase } from '@/domain/delivery/application/use-cases/authenticate-courier';
 
 const authenticationBodySchema = z.object({
   document: z.string(),
@@ -21,11 +21,11 @@ type AuthenticationBody = z.infer<typeof authenticationBodySchema>;
 
 const validationPipe = new ZodValidationPipe(authenticationBodySchema);
 
-@Controller('/api/admin/signin')
-class AuthenticateLogisticsSupportController {
-  private useCase: AuthenticateLogisticsSupportUseCase;
+@Controller('/api/signin')
+class AuthenticateCourierController {
+  private useCase: AuthenticateCourierUseCase;
 
-  constructor(useCase: AuthenticateLogisticsSupportUseCase) {
+  constructor(useCase: AuthenticateCourierUseCase) {
     this.useCase = useCase;
   }
 
@@ -33,7 +33,6 @@ class AuthenticateLogisticsSupportController {
   @Public()
   async handle(@Body(validationPipe) body: AuthenticationBody) {
     const { document, password } = body;
-
     const result = await this.useCase.execute({
       document,
       password,
@@ -57,4 +56,4 @@ class AuthenticateLogisticsSupportController {
   }
 }
 
-export { AuthenticateLogisticsSupportController };
+export { AuthenticateCourierController };

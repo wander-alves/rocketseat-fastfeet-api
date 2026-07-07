@@ -10,37 +10,37 @@ import { z } from 'zod';
 
 import { UserTokenDecorator } from '@/infra/authentication/user-token-decorator';
 import { type TokenPayload } from '@/infra/authentication/jwt.strategy';
-import { CourierPresenter } from '@/infra/http/presenters/courier-presenter';
+import { RecipientPresenter } from '@/infra/http/presenters/recipient-presenter';
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
 
-import { RegisterCourierUseCase } from '@/domain/delivery/application/use-cases/register-courier';
+import { RegisterRecipientUseCase } from '@/domain/delivery/application/use-cases/register-recipient';
 import { AlreadyRegisteredDocumentIDError } from '@/domain/delivery/application/use-cases/errors/already-registered-document-id-error';
 import { InvalidCredentialError } from '@/domain/delivery/application/use-cases/errors/invalid-credential-error';
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
 import { Roles, Role } from '@/infra/authentication/roles';
 
-const registerCourierBodySchema = z.object({
+const registerRecipientBodySchema = z.object({
   name: z.string(),
   password: z.string(),
   document: z.string(),
 });
 
-type RegisterCourierBody = z.infer<typeof registerCourierBodySchema>;
+type RegisterRecipientBody = z.infer<typeof registerRecipientBodySchema>;
 
-const validationPipe = new ZodValidationPipe(registerCourierBodySchema);
+const validationPipe = new ZodValidationPipe(registerRecipientBodySchema);
 
-@Controller('/api/accounts/couriers')
-class RegisterCourierController {
-  private useCase: RegisterCourierUseCase;
+@Controller('/api/accounts/recipients')
+class RegisterRecipientController {
+  private useCase: RegisterRecipientUseCase;
 
-  constructor(useCase: RegisterCourierUseCase) {
+  constructor(useCase: RegisterRecipientUseCase) {
     this.useCase = useCase;
   }
 
   @Post()
   @Roles(Role.ADMIN)
   async handle(
-    @Body(validationPipe) body: RegisterCourierBody,
+    @Body(validationPipe) body: RegisterRecipientBody,
     @UserTokenDecorator() user: TokenPayload,
   ) {
     const { name, password, document } = body;
@@ -67,12 +67,12 @@ class RegisterCourierController {
       }
     }
 
-    const { courier } = result.value;
+    const { recipient } = result.value;
 
     return {
-      courier: CourierPresenter.toHTTP(courier),
+      recipient: RecipientPresenter.toHTTP(recipient),
     };
   }
 }
 
-export { RegisterCourierController };
+export { RegisterRecipientController };

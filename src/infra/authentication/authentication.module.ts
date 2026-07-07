@@ -7,6 +7,7 @@ import { EnvModule } from '@/infra/env/env.module';
 import { EnvService } from '@/infra/env/env.service';
 import { JwtStrategy } from '@/infra/authentication/jwt.strategy';
 import { JwtAuthGuard } from '@/infra/authentication/jwt-auth.guard';
+import { RolesGuard } from '@/infra/authentication/roles.guard';
 
 @Module({
   imports: [
@@ -35,6 +36,10 @@ import { JwtAuthGuard } from '@/infra/authentication/jwt-auth.guard';
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
     },
   ],
 })
