@@ -14,6 +14,8 @@ import { AuthenticateLogisticsSupportController } from '@/infra/http/controllers
 import { AuthenticateRecipientController } from '@/infra/http/controllers/authenticate-recipient.controller';
 import { RegisterCourierController } from '@/infra/http/controllers/register-courier.controller';
 import { RegisterRecipientController } from '@/infra/http/controllers/register-recipient.controller';
+import { RegisterShipmentController } from './controllers/register-shipment.controller';
+import { RegisterShipmentUseCase } from '@/domain/delivery/application/use-cases/register-shipment';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -23,6 +25,7 @@ import { RegisterRecipientController } from '@/infra/http/controllers/register-r
     AuthenticateRecipientController,
     RegisterCourierController,
     RegisterRecipientController,
+    RegisterShipmentController,
   ],
   providers: [
     AuthenticateCourierUseCase,
@@ -30,6 +33,7 @@ import { RegisterRecipientController } from '@/infra/http/controllers/register-r
     AuthenticateRecipientUseCase,
     RegisterCourierUseCase,
     RegisterRecipientUseCase,
+    RegisterShipmentUseCase,
   ],
 })
 class HttpModule {}
