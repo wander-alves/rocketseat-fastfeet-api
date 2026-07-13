@@ -27,5 +27,54 @@ model User {
 
   updatedAt DateTime? @updatedAt() @map("updated_at")
 
+  recipient Shipment? @relation("recipient")
+  courier   Shipment? @relation("courier")
+
   @@map("users")
+}
+
+enum ShipmentStatus {
+  WAITING
+  PICKED_UP
+  DELIVERED
+  RETURNED
+}
+
+model Shipment {
+  id String @id @default(uuid())
+
+  name          String
+  street        String
+  addressNumber Int    @map("address_number")
+  neighborhood  String
+  state         String
+  zipcode       String
+
+  status ShipmentStatus @default(WAITING)
+
+  createdAt   DateTime  @default(now()) @map("created_at")
+  pickedUpAt  DateTime? @default(now()) @map("picked_up_at")
+  deliveredAt DateTime? @default(now()) @map("delivered_at")
+  returnedAt  DateTime? @default(now()) @map("returned_at")
+
+  deliveryProofId String?        @unique @map("delivery_proof_id")
+  deliveryProof   DeliveryProof? @relation(fields: [deliveryProofId], references: [id])
+
+  recipient   User   @relation("recipient", fields: [recipientId], references: [id])
+  recipientId String @unique
+
+  courier   User?   @relation("courier", fields: [courierId], references: [id])
+  courierId String? @unique
+
+  @@map("shipments")
+}
+
+model DeliveryProof {
+  id String @id @default(uuid())
+
+  name String
+
+  shipments Shipment?
+
+  @@map("delivery_proofs")
 }
