@@ -29,6 +29,12 @@ class InMemoryCouriersRepository implements CouriersRepository {
 
     return courier;
   }
+
+  async deleteOneById(id: string) {
+    const index = this.items.findIndex((item) => item.id.value === id);
+
+    this.items.splice(index, 1);
+  }
 }
 
 export { InMemoryCouriersRepository };
