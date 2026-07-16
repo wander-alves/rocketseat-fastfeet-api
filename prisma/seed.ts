@@ -30,10 +30,10 @@ async function seed() {
         role: 'LOGISTICSSUPPORT',
       },
       {
-        name: 'Admin02',
-        documentID: '999.999.999-02',
-        password: await hash('admin02', 8),
-        role: 'LOGISTICSSUPPORT',
+        name: 'Courier01',
+        documentID: '888.888.888-01',
+        password: await hash('courier01', 8),
+        role: 'COURIER',
       },
     ],
   });
