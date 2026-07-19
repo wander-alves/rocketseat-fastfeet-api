@@ -38,8 +38,6 @@ class DeleteCourierController {
       courierId,
     });
 
-    console.log(result.value);
-
     if (result.isLeft()) {
       const error = result.value;
 
