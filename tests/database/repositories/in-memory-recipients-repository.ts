@@ -29,6 +29,12 @@ class InMemoryRecipientsRepository implements RecipientsRepository {
 
     return recipient;
   }
+
+  async deleteOneById(id: string) {
+    const index = this.items.findIndex((item) => item.id.value === id);
+
+    this.items.splice(index, 1);
+  }
 }
 
 export { InMemoryRecipientsRepository };

@@ -13,16 +13,16 @@ import { UserTokenDecorator } from '@/infra/authentication/user-token-decorator'
 import { type TokenPayload } from '@/infra/authentication/jwt.strategy';
 import { Roles, Role } from '@/infra/authentication/roles';
 
-import { DeleteCourierUseCase } from '@/domain/delivery/application/use-cases/delete-courier';
+import { DeleteRecipientUseCase } from '@/domain/delivery/application/use-cases/delete-recipient';
 
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 
-@Controller('/api/accounts/couriers/:id')
-class DeleteCourierController {
-  private useCase: DeleteCourierUseCase;
+@Controller('/api/accounts/recipients/:id')
+class DeleteRecipientController {
+  private useCase: DeleteRecipientUseCase;
 
-  constructor(useCase: DeleteCourierUseCase) {
+  constructor(useCase: DeleteRecipientUseCase) {
     this.useCase = useCase;
   }
 
@@ -30,12 +30,12 @@ class DeleteCourierController {
   @Roles(Role.ADMIN)
   @HttpCode(204)
   async handle(
-    @Param('id') courierId: string,
+    @Param('id') recipientId: string,
     @UserTokenDecorator() user: TokenPayload,
   ) {
     const result = await this.useCase.execute({
       logisticsSupportId: user.sub,
-      courierId,
+      recipientId,
     });
 
     if (result.isLeft()) {
@@ -53,4 +53,4 @@ class DeleteCourierController {
   }
 }
 
-export { DeleteCourierController };
+export { DeleteRecipientController };

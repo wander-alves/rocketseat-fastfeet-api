@@ -53,6 +53,14 @@ class PrismaRecipientsRepository implements RecipientsRepository {
       data,
     });
   }
+
+  async deleteOneById(id: string) {
+    await this.prismaService.user.delete({
+      where: {
+        id,
+      },
+    });
+  }
 }
 
 export { PrismaRecipientsRepository };
