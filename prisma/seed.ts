@@ -35,6 +35,12 @@ async function seed() {
         password: await hash('courier01', 8),
         role: 'COURIER',
       },
+      {
+        name: 'Recipient01',
+        documentID: '888.888.888-02',
+        password: await hash('recipient01', 8),
+        role: 'RECIPIENT',
+      },
     ],
   });
 }
