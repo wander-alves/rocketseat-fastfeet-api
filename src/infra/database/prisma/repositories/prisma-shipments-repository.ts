@@ -37,6 +37,14 @@ class PrismaShipmentsRepository implements ShipmentsRepository {
       data,
     });
   }
+
+  async deleteOneById(id: string) {
+    await this.prismaService.shipment.delete({
+      where: {
+        id,
+      },
+    });
+  }
 }
 
 export { PrismaShipmentsRepository };
