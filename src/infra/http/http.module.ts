@@ -20,6 +20,8 @@ import { RegisterCourierController } from '@/infra/http/controllers/register-cou
 import { RegisterRecipientController } from '@/infra/http/controllers/register-recipient.controller';
 import { RegisterShipmentController } from './controllers/register-shipment.controller';
 import { RegisterShipmentUseCase } from '@/domain/delivery/application/use-cases/register-shipment';
+import { DeleteShipmentController } from './controllers/delete-shipment.controller';
+import { DeleteShipmentUseCase } from '@/domain/delivery/application/use-cases/delete-shipment';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -30,6 +32,7 @@ import { RegisterShipmentUseCase } from '@/domain/delivery/application/use-cases
     RegisterCourierController,
     DeleteCourierController,
     DeleteRecipientController,
+    DeleteShipmentController,
     RegisterRecipientController,
     RegisterShipmentController,
   ],
@@ -40,6 +43,7 @@ import { RegisterShipmentUseCase } from '@/domain/delivery/application/use-cases
     RegisterCourierUseCase,
     DeleteCourierUseCase,
     DeleteRecipientUseCase,
+    DeleteShipmentUseCase,
     RegisterRecipientUseCase,
     RegisterShipmentUseCase,
   ],
