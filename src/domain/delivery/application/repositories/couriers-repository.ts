@@ -5,6 +5,7 @@ abstract class CouriersRepository {
   abstract findOneById(id: string): Promise<Courier | null>;
   abstract findOneByDocumentID(documentID: string): Promise<Courier | null>;
   abstract deleteOneById(id: string): Promise<void>;
+  abstract save(courier: Courier): Promise<void>;
 }
 
 export { CouriersRepository };
