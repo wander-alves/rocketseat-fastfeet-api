@@ -35,6 +35,12 @@ class InMemoryRecipientsRepository implements RecipientsRepository {
 
     this.items.splice(index, 1);
   }
+
+  async save(recipient: Recipient) {
+    const index = this.items.findIndex((item) => item.id.equals(recipient.id));
+
+    this.items[index] = recipient;
+  }
 }
 
 export { InMemoryRecipientsRepository };
