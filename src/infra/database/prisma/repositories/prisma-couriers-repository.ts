@@ -61,6 +61,17 @@ class PrismaCouriersRepository implements CouriersRepository {
       },
     });
   }
+
+  async save(courier: Courier) {
+    const data = PrismaCourierMapper.toPrisma(courier);
+
+    await this.prismaService.user.update({
+      where: {
+        id: courier.id.value,
+      },
+      data,
+    });
+  }
 }
 
 export { PrismaCouriersRepository };
