@@ -61,6 +61,17 @@ class PrismaRecipientsRepository implements RecipientsRepository {
       },
     });
   }
+
+  async save(recipient: Recipient) {
+    const data = PrismaRecipientMapper.toPrisma(recipient);
+
+    await this.prismaService.user.update({
+      where: {
+        id: recipient.id.value,
+      },
+      data,
+    });
+  }
 }
 
 export { PrismaRecipientsRepository };

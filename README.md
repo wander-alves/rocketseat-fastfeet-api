@@ -12,13 +12,13 @@ Esse repositório é a minha resolução do último desafio da trilha de Node.js
 
 Para registrar no GitHub issues: 
 
-- [ ] Criar os dois tipos de usuário: `admin` e `entregador`
-- [ ] Implementar um sistema de login com CPF e Senha
-- [ ] Desenvolver o CRUD dos entregadores com acesso restrito a usuários `admin`
-- [ ] Desenvolver o CRUD dos destinatários (clientes) com acesso restrito a usuários `admin`
+- [x] Criar os dois tipos de usuário: `admin` e `entregador`
+- [x] Implementar um sistema de login com CPF e Senha
+- [x] Desenvolver o CRUD dos entregadores com acesso restrito a usuários `admin`
+- [x] Desenvolver o CRUD dos destinatários (clientes) com acesso restrito a usuários `admin`
 - [ ] Desenvolver o CRUD das encomendas (clientes) com acesso restrito a usuários `admin`
 - [ ] Implementar a funcionalidade para alterar a senha de usuários, com acesso restrito a usuário `admin`
-- [ ] Implementar a funcionalidade para marcar uma encomenda como "aguardando" (disponível para retirada)
+- [x] Implementar a funcionalidade para marcar uma encomenda como "aguardando" (disponível para retirada)
 - [ ] Implementar a funcionalidade para um entregador registrar a "retirada" de uma encomenda
 - [ ] Implementar a funcionalidade para marcar uma encomenda como "entregue" (restrita ao entregador que a retirou)
 - [ ] Implementar a funcionalidade para marcar uma encomenda como "devolvida"
@@ -28,11 +28,11 @@ Para registrar no GitHub issues:
 
 
 **Funcionalidades da aplicação**
-- [ ] A aplicação deve ter dois tipos de usuário, entregador e/ou admin
-- [ ] Deve ser possível realizar login com CPF e Senha
-- [ ] Deve ser possível realizar o CRUD dos entregadores
+- [x] A aplicação deve ter dois tipos de usuário, entregador e/ou admin
+- [x] Deve ser possível realizar login com CPF e Senha
+- [x] Deve ser possível realizar o CRUD dos entregadores
+- [x] Deve ser possível realizar o CRUD dos destinatários
 - [ ] Deve ser possível realizar o CRUD das encomendas
-- [ ] Deve ser possível realizar o CRUD dos destinatários
 - [ ] Deve ser possível marcar uma encomenda como aguardando (Disponível para retirada)
 - [ ] Deve ser possível retirar uma encomenda
 - [ ] Deve ser possível marcar uma encomenda como entregue
