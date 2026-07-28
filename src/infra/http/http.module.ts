@@ -8,20 +8,22 @@ import { AuthenticateLogisticsSupportUseCase } from '@/domain/delivery/applicati
 import { AuthenticateRecipientUseCase } from '@/domain/delivery/application/use-cases/authenticate-recipient';
 import { DeleteCourierUseCase } from '@/domain/delivery/application/use-cases/delete-courier';
 import { DeleteRecipientUseCase } from '@/domain/delivery/application/use-cases/delete-recipient';
+import { DeleteShipmentUseCase } from '@/domain/delivery/application/use-cases/delete-shipment';
 import { RegisterCourierUseCase } from '@/domain/delivery/application/use-cases/register-courier';
+import { EditCourierUseCase } from '@/domain/delivery/application/use-cases/edit-courier';
 import { RegisterRecipientUseCase } from '@/domain/delivery/application/use-cases/register-recipient';
+import { RegisterShipmentUseCase } from '@/domain/delivery/application/use-cases/register-shipment';
 
 import { AuthenticateCourierController } from '@/infra/http/controllers/authenticate-courier.controller';
 import { AuthenticateLogisticsSupportController } from '@/infra/http/controllers/authenticate-logistics-support.controller';
 import { AuthenticateRecipientController } from '@/infra/http/controllers/authenticate-recipient.controller';
 import { DeleteCourierController } from '@/infra/http/controllers/delete-courier.controller';
 import { DeleteRecipientController } from '@/infra/http/controllers/delete-recipient.controller';
+import { DeleteShipmentController } from '@/infra/http/controllers/delete-shipment.controller';
+import { EditCourierController } from '@/infra/http/controllers/edit-courier.controller';
 import { RegisterCourierController } from '@/infra/http/controllers/register-courier.controller';
 import { RegisterRecipientController } from '@/infra/http/controllers/register-recipient.controller';
-import { RegisterShipmentController } from './controllers/register-shipment.controller';
-import { RegisterShipmentUseCase } from '@/domain/delivery/application/use-cases/register-shipment';
-import { DeleteShipmentController } from './controllers/delete-shipment.controller';
-import { DeleteShipmentUseCase } from '@/domain/delivery/application/use-cases/delete-shipment';
+import { RegisterShipmentController } from '@/infra/http/controllers/register-shipment.controller';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -33,6 +35,7 @@ import { DeleteShipmentUseCase } from '@/domain/delivery/application/use-cases/d
     DeleteCourierController,
     DeleteRecipientController,
     DeleteShipmentController,
+    EditCourierController,
     RegisterRecipientController,
     RegisterShipmentController,
   ],
@@ -40,10 +43,11 @@ import { DeleteShipmentUseCase } from '@/domain/delivery/application/use-cases/d
     AuthenticateCourierUseCase,
     AuthenticateLogisticsSupportUseCase,
     AuthenticateRecipientUseCase,
-    RegisterCourierUseCase,
     DeleteCourierUseCase,
     DeleteRecipientUseCase,
     DeleteShipmentUseCase,
+    EditCourierUseCase,
+    RegisterCourierUseCase,
     RegisterRecipientUseCase,
     RegisterShipmentUseCase,
   ],

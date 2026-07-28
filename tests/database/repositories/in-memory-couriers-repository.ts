@@ -35,6 +35,12 @@ class InMemoryCouriersRepository implements CouriersRepository {
 
     this.items.splice(index, 1);
   }
+
+  async save(courier: Courier) {
+    const index = this.items.findIndex((item) => item.id.equals(courier.id));
+
+    this.items[index] = courier;
+  }
 }
 
 export { InMemoryCouriersRepository };
