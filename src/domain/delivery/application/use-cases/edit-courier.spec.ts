@@ -55,7 +55,6 @@ describe('[Unitary] Edit Courier Use Case', () => {
       logisticsSupportId: logisticsSupport.id.value,
       courierId: courier.id.value,
       name: courier.name,
-      password: courier.password,
       document: '111.222.333-44',
     });
 
@@ -79,7 +78,6 @@ describe('[Unitary] Edit Courier Use Case', () => {
       logisticsSupportId: courier.id.value,
       courierId: courier.id.value,
       name: courier.name,
-      password: courier.password,
       document: '111.222.333-44',
     });
 
@@ -92,7 +90,6 @@ describe('[Unitary] Edit Courier Use Case', () => {
       logisticsSupportId: logisticsSupport.id.value,
       courierId: 'non-existent-id',
       name: courier.name,
-      password: courier.password,
       document: '111.222.333-44',
     });
 
@@ -113,7 +110,6 @@ describe('[Unitary] Edit Courier Use Case', () => {
       logisticsSupportId: logisticsSupport.id.value,
       courierId: courier.id.value,
       name: courier.name,
-      password: courier.password,
       document: '111.222.333-44',
     });
 
@@ -126,7 +122,6 @@ describe('[Unitary] Edit Courier Use Case', () => {
       logisticsSupportId: logisticsSupport.id.value,
       courierId: courier.id.value,
       name: courier.name,
-      password: courier.password,
       document: '000.000.000-01',
     });
 

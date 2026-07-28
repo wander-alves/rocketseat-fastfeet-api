@@ -18,7 +18,6 @@ interface EditCourierUseCaseRequest {
   courierId: string;
   name: string;
   document: string;
-  password: string;
 }
 
 type EditCourierUseCaseResponse = Either<
@@ -52,7 +51,6 @@ class EditCourierUseCase {
     courierId,
     name,
     document,
-    password,
   }: EditCourierUseCaseRequest): Promise<EditCourierUseCaseResponse> {
     const logisticsSupport =
       await this.logisticsSupportsRepository.findOneById(logisticsSupportId);
@@ -85,11 +83,6 @@ class EditCourierUseCase {
 
     courier.name = name ?? courier.name;
     courier.documentID = documentID ?? courier.documentID;
-
-    const hashedPassword = password
-      ? await this.hashGenerator.hash(password)
-      : courier.password;
-    courier.password = hashedPassword;
 
     await this.couriersRepository.save(courier);
 
