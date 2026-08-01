@@ -5,7 +5,6 @@ import { DocumentID } from '@/domain/delivery/enterprise/entities/value-objects/
 
 import { CouriersRepository } from '@/domain/delivery/application/repositories/couriers-repository';
 import { LogisticsSupportsRepository } from '@/domain/delivery/application/repositories/logistics-supports-repository';
-import { HashGenerator } from '@/domain/delivery/application/cryptography/hash-generator';
 
 import { Either, left, right } from '@/core/either';
 import { AlreadyRegisteredDocumentIDError } from '@/domain/delivery/application/use-cases/errors/already-registered-document-id-error';
@@ -34,16 +33,13 @@ type EditCourierUseCaseResponse = Either<
 class EditCourierUseCase {
   private logisticsSupportsRepository: LogisticsSupportsRepository;
   private couriersRepository: CouriersRepository;
-  private hashGenerator: HashGenerator;
 
   constructor(
     logisticsSupportsRepository: LogisticsSupportsRepository,
     couriersRepository: CouriersRepository,
-    hashGenerator: HashGenerator,
   ) {
     this.logisticsSupportsRepository = logisticsSupportsRepository;
     this.couriersRepository = couriersRepository;
-    this.hashGenerator = hashGenerator;
   }
 
   async execute({

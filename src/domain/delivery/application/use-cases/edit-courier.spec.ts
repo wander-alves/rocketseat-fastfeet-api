@@ -7,7 +7,6 @@ import { DocumentID } from '@/domain/delivery/enterprise/entities/value-objects/
 
 import { InMemoryLogisticsSupportsRepository } from '@/../tests/database/repositories/in-memory-logistics-supports-repository';
 import { InMemoryCouriersRepository } from '@/../tests/database/repositories/in-memory-couriers-repository';
-import { FakeHasher } from '@/../tests/cryptography/fake-hasher';
 
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
@@ -17,7 +16,6 @@ import { AlreadyRegisteredDocumentIDError } from '@/domain/delivery/application/
 describe('[Unitary] Edit Courier Use Case', () => {
   let logisticsSupportsRepository: InMemoryLogisticsSupportsRepository;
   let couriersRepository: InMemoryCouriersRepository;
-  let hasher: FakeHasher;
   let sut: EditCourierUseCase;
   let logisticsSupport: LogisticsSupport;
   let courier: Courier;
@@ -25,7 +23,6 @@ describe('[Unitary] Edit Courier Use Case', () => {
   beforeEach(async () => {
     logisticsSupportsRepository = new InMemoryLogisticsSupportsRepository();
     couriersRepository = new InMemoryCouriersRepository();
-    hasher = new FakeHasher();
 
     logisticsSupport = new LogisticsSupport({
       name: 'admin01',
@@ -46,7 +43,6 @@ describe('[Unitary] Edit Courier Use Case', () => {
     sut = new EditCourierUseCase(
       logisticsSupportsRepository,
       couriersRepository,
-      hasher,
     );
   });
 

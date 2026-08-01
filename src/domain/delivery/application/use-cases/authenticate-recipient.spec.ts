@@ -2,7 +2,7 @@ import { describe, beforeEach, it, expect } from 'vitest';
 
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { DocumentID } from '@/domain/delivery/enterprise/entities/value-objects/document-id';
-import { Recipient } from '../../enterprise/entities/recipient';
+import { Recipient } from '@/domain/delivery/enterprise/entities/recipient';
 import { AuthenticateRecipientUseCase } from '@/domain/delivery/application/use-cases/authenticate-recipient';
 
 import { InvalidCredentialError } from '@/domain/delivery/application/use-cases/errors/invalid-credential-error';
