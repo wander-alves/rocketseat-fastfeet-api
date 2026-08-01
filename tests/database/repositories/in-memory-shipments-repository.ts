@@ -23,6 +23,12 @@ class InMemoryShipmentsRepository implements ShipmentsRepository {
 
     this.items.splice(index, 1);
   }
+
+  async save(shipment: Shipment): Promise<void> {
+    const index = this.items.findIndex((item) => item.id.equals(shipment.id));
+
+    this.items[index] = shipment;
+  }
 }
 
 export { InMemoryShipmentsRepository };
