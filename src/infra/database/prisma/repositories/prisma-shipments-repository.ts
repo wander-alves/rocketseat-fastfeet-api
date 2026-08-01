@@ -45,6 +45,17 @@ class PrismaShipmentsRepository implements ShipmentsRepository {
       },
     });
   }
+
+  async save(shipment: Shipment) {
+    const data = PrismaShipmentMapper.toPrisma(shipment);
+
+    await this.prismaService.shipment.update({
+      where: {
+        id: shipment.id.value,
+      },
+      data,
+    });
+  }
 }
 
 export { PrismaShipmentsRepository };
