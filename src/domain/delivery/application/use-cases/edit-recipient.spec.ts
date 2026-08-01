@@ -7,7 +7,6 @@ import { DocumentID } from '@/domain/delivery/enterprise/entities/value-objects/
 
 import { InMemoryLogisticsSupportsRepository } from '@/../tests/database/repositories/in-memory-logistics-supports-repository';
 import { InMemoryRecipientsRepository } from '@/../tests/database/repositories/in-memory-recipients-repository';
-import { FakeHasher } from '@/../tests/cryptography/fake-hasher';
 
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
@@ -17,7 +16,6 @@ import { AlreadyRegisteredDocumentIDError } from '@/domain/delivery/application/
 describe('[Unitary] Edit Recipient Use Case', () => {
   let logisticsSupportsRepository: InMemoryLogisticsSupportsRepository;
   let recipientsRepository: InMemoryRecipientsRepository;
-  let hasher: FakeHasher;
   let sut: EditRecipientUseCase;
   let logisticsSupport: LogisticsSupport;
   let recipient: Recipient;
@@ -25,7 +23,6 @@ describe('[Unitary] Edit Recipient Use Case', () => {
   beforeEach(async () => {
     logisticsSupportsRepository = new InMemoryLogisticsSupportsRepository();
     recipientsRepository = new InMemoryRecipientsRepository();
-    hasher = new FakeHasher();
 
     logisticsSupport = new LogisticsSupport({
       name: 'admin01',
@@ -46,7 +43,6 @@ describe('[Unitary] Edit Recipient Use Case', () => {
     sut = new EditRecipientUseCase(
       logisticsSupportsRepository,
       recipientsRepository,
-      hasher,
     );
   });
 
@@ -73,7 +69,7 @@ describe('[Unitary] Edit Recipient Use Case', () => {
     });
   });
 
-  it('should not be able to edit a recipient without from non admin account', async () => {
+  it('should not be able to edit a recipient from non admin account', async () => {
     const result = await sut.execute({
       logisticsSupportId: recipient.id.value,
       recipientId: recipient.id.value,

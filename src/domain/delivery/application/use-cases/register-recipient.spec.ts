@@ -10,6 +10,7 @@ import { FakeHasher } from '@/../tests/cryptography/fake-hasher';
 
 import { InvalidDocumentIDError } from '@/domain/delivery/application/use-cases/errors/invalid-document-id-error';
 import { AlreadyRegisteredDocumentIDError } from '@/domain/delivery/application/use-cases/errors/already-registered-document-id-error';
+import { NotAllowedError } from '@/core/errors/not-allowed-error';
 
 describe('[Unitary] Register Recipient Use Case', () => {
   let logisticsSupportsRepository: InMemoryLogisticsSupportsRepository;
@@ -56,6 +57,19 @@ describe('[Unitary] Register Recipient Use Case', () => {
         },
       },
     });
+  });
+
+  it('should not be able to register a recipient from non admin account', async () => {
+    const recipient = await sut.execute({
+      logisticsSupportId: 'invalid-id',
+      name: 'Jane Doe',
+      password: 'strong',
+      document: '111.222.333-45',
+    });
+
+    expect(recipient.isLeft()).toBe(true);
+    expect(recipient.value).toBeInstanceOf(NotAllowedError);
+    expect(recipientsRepository.items).toHaveLength(0);
   });
 
   it('should not be able to register a recipient with invalid document', async () => {

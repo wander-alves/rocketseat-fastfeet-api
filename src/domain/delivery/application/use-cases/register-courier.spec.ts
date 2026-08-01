@@ -10,6 +10,7 @@ import { FakeHasher } from '@/../tests/cryptography/fake-hasher';
 
 import { InvalidDocumentIDError } from '@/domain/delivery/application/use-cases/errors/invalid-document-id-error';
 import { AlreadyRegisteredDocumentIDError } from '@/domain/delivery/application/use-cases/errors/already-registered-document-id-error';
+import { NotAllowedError } from '@/core/errors/not-allowed-error';
 
 describe('[Unitary] Register Courier Use Case', () => {
   let logisticsSupportsRepository: InMemoryLogisticsSupportsRepository;
@@ -56,6 +57,19 @@ describe('[Unitary] Register Courier Use Case', () => {
         },
       },
     });
+  });
+
+  it('should not be able to register a courier from non admin account', async () => {
+    const courier = await sut.execute({
+      logisticsSupportId: 'invalid-id',
+      name: 'Jane Doe',
+      password: 'strong',
+      document: '111.222.333-45',
+    });
+
+    expect(courier.isLeft()).toBe(true);
+    expect(courier.value).toBeInstanceOf(NotAllowedError);
+    expect(couriersRepository.items).toHaveLength(0);
   });
 
   it('should not be able to register a courier with invalid document', async () => {
