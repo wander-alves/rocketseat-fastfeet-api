@@ -12,6 +12,7 @@ import { DeleteShipmentUseCase } from '@/domain/delivery/application/use-cases/d
 import { EditCourierUseCase } from '@/domain/delivery/application/use-cases/edit-courier';
 import { EditRecipientUseCase } from '@/domain/delivery/application/use-cases/edit-recipient';
 import { EditShipmentUseCase } from '@/domain/delivery/application/use-cases/edit-shipment';
+import { PickupShipmentUseCase } from '@/domain/delivery/application/use-cases/pickup-shipment';
 import { RegisterCourierUseCase } from '@/domain/delivery/application/use-cases/register-courier';
 import { RegisterRecipientUseCase } from '@/domain/delivery/application/use-cases/register-recipient';
 import { RegisterShipmentUseCase } from '@/domain/delivery/application/use-cases/register-shipment';
@@ -27,6 +28,7 @@ import { DeleteShipmentController } from '@/infra/http/controllers/delete-shipme
 import { EditCourierController } from '@/infra/http/controllers/edit-courier.controller';
 import { EditRecipientController } from '@/infra/http/controllers/edit-recipient.controller';
 import { EditShipmentController } from '@/infra/http/controllers/edit-shipment.controller';
+import { PickupShipmentController } from '@/infra/http/controllers/pickup-shipment.controller';
 import { RegisterCourierController } from '@/infra/http/controllers/register-courier.controller';
 import { RegisterRecipientController } from '@/infra/http/controllers/register-recipient.controller';
 import { RegisterShipmentController } from '@/infra/http/controllers/register-shipment.controller';
@@ -45,6 +47,7 @@ import { UpdateRecipientPasswordController } from '@/infra/http/controllers/upda
     EditCourierController,
     EditRecipientController,
     EditShipmentController,
+    PickupShipmentController,
     RegisterCourierController,
     RegisterRecipientController,
     RegisterShipmentController,
@@ -61,6 +64,7 @@ import { UpdateRecipientPasswordController } from '@/infra/http/controllers/upda
     EditCourierUseCase,
     EditRecipientUseCase,
     EditShipmentUseCase,
+    PickupShipmentUseCase,
     RegisterCourierUseCase,
     RegisterRecipientUseCase,
     RegisterShipmentUseCase,
