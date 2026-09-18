@@ -19,10 +19,10 @@ Para registrar no GitHub issues:
 - [x] Desenvolver o CRUD das encomendas (clientes) com acesso restrito a usuários `admin`
 - [x] Implementar a funcionalidade para alterar a senha de usuários, com acesso restrito a usuário `admin`
 - [x] Implementar a funcionalidade para marcar uma encomenda como "aguardando" (disponível para retirada)
-- [ ] Implementar a funcionalidade para um entregador registrar a "retirada" de uma encomenda
+- [x] Implementar a funcionalidade para um entregador registrar a "retirada" de uma encomenda
 - [ ] Implementar a funcionalidade para marcar uma encomenda como "entregue" (restrita ao entregador que a retirou)
 - [ ] Implementar a funcionalidade para marcar uma encomenda como "devolvida"
-- [ ] Desenvolver a listagem de encomendas com endereços próximos à localização do entregador
+- [ ] Desenvolver a listagem de encomendas com endereços próximos a localização do entregador
 - [ ] Desenvolver a listagem das entregas associadas ao entregador
 - [ ] Implementar o envio de notificação ao destinatário a cada alteração no status da sua encomenda
 
