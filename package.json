@@ -16,6 +16,7 @@
     "services:down": "docker compose -f ./tests/infra/docker-compose.yaml down  ",
     "migrate:up": "prisma migrate dev",
     "migrate:down": "prisma migrate reset",
+    "prisma:seed": "prisma db seed",
     "test": "vitest run --config ./tests/setup/vitest.config.mts",
     "test:watch": "vitest --config ./tests/setup/vitest.config.mts",
     "test:cov": "vitest --coverage",
