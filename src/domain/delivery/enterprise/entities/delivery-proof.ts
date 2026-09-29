@@ -3,7 +3,8 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { Optional } from '@/core/types/optional';
 
 interface IDeliveryProof {
-  url: string | null;
+  title: string;
+  url: string;
   createdAt: Date;
   updatedAt?: Date | null;
 }
@@ -22,11 +23,19 @@ class DeliveryProof extends Entity<IDeliveryProof> {
     );
   }
 
+  get title() {
+    return this.props.title;
+  }
+
+  set title(title: string) {
+    this.props.title = title;
+  }
+
   get url() {
     return this.props.url;
   }
 
-  set url(url: string | null) {
+  set url(url: string) {
     this.props.url = url;
   }
 

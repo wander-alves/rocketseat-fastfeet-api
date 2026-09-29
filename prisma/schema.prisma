@@ -72,7 +72,8 @@ model Shipment {
 model DeliveryProof {
   id String @id @default(uuid())
 
-  name String
+  title String
+  url   String
 
   shipments Shipment?
 
