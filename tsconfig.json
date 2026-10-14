@@ -3,7 +3,7 @@
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "target": "ES2023",
-    "types": ["node"],
+    "types": ["node","Multer"],
     "resolvePackageJsonExports": true,
     "esModuleInterop": true,
     "isolatedModules": true,
