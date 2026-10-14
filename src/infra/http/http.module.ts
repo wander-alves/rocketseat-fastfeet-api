@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 
 import { DatabaseModule } from '@/infra/database/database.module';
 import { CryptographyModule } from '@/infra/cryptography/cryptography.module';
+import { StorageModule } from '@/infra/storage/storage.module';
 
 import { AuthenticateCourierUseCase } from '@/domain/delivery/application/use-cases/authenticate-courier';
 import { AuthenticateLogisticsSupportUseCase } from '@/domain/delivery/application/use-cases/authenticate-logistics-support';
@@ -9,6 +10,7 @@ import { AuthenticateRecipientUseCase } from '@/domain/delivery/application/use-
 import { DeleteCourierUseCase } from '@/domain/delivery/application/use-cases/delete-courier';
 import { DeleteRecipientUseCase } from '@/domain/delivery/application/use-cases/delete-recipient';
 import { DeleteShipmentUseCase } from '@/domain/delivery/application/use-cases/delete-shipment';
+import { DeliverShipmentUseCase } from '@/domain/delivery/application/use-cases/deliver-shipment';
 import { EditCourierUseCase } from '@/domain/delivery/application/use-cases/edit-courier';
 import { EditRecipientUseCase } from '@/domain/delivery/application/use-cases/edit-recipient';
 import { EditShipmentUseCase } from '@/domain/delivery/application/use-cases/edit-shipment';
@@ -25,6 +27,7 @@ import { AuthenticateRecipientController } from '@/infra/http/controllers/authen
 import { DeleteCourierController } from '@/infra/http/controllers/delete-courier.controller';
 import { DeleteRecipientController } from '@/infra/http/controllers/delete-recipient.controller';
 import { DeleteShipmentController } from '@/infra/http/controllers/delete-shipment.controller';
+import { DeliverShipmentController } from './controllers/deliver-shipment.controller';
 import { EditCourierController } from '@/infra/http/controllers/edit-courier.controller';
 import { EditRecipientController } from '@/infra/http/controllers/edit-recipient.controller';
 import { EditShipmentController } from '@/infra/http/controllers/edit-shipment.controller';
@@ -36,7 +39,7 @@ import { UpdateCourierPasswordController } from '@/infra/http/controllers/update
 import { UpdateRecipientPasswordController } from '@/infra/http/controllers/update-recipient-password.controller';
 
 @Module({
-  imports: [DatabaseModule, CryptographyModule],
+  imports: [DatabaseModule, CryptographyModule, StorageModule],
   controllers: [
     AuthenticateCourierController,
     AuthenticateLogisticsSupportController,
@@ -44,6 +47,7 @@ import { UpdateRecipientPasswordController } from '@/infra/http/controllers/upda
     DeleteCourierController,
     DeleteRecipientController,
     DeleteShipmentController,
+    DeliverShipmentController,
     EditCourierController,
     EditRecipientController,
     EditShipmentController,
@@ -61,6 +65,7 @@ import { UpdateRecipientPasswordController } from '@/infra/http/controllers/upda
     DeleteCourierUseCase,
     DeleteRecipientUseCase,
     DeleteShipmentUseCase,
+    DeliverShipmentUseCase,
     EditCourierUseCase,
     EditRecipientUseCase,
     EditShipmentUseCase,
