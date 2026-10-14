@@ -18,6 +18,16 @@ class InMemoryDeliveryProofsRepository implements DeliveryProofsRepository {
     return deliveryProof;
   }
 
+  async findOneByURL(url: string) {
+    const deliveryProof = this.items.find((item) => item.url === url);
+
+    if (!deliveryProof) {
+      return null;
+    }
+
+    return deliveryProof;
+  }
+
   async deleteOneById(id: string) {
     const index = this.items.findIndex((item) => item.id.value === id);
 

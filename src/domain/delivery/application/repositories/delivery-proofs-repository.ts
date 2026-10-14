@@ -3,6 +3,7 @@ import { DeliveryProof } from '@/domain/delivery/enterprise/entities/delivery-pr
 abstract class DeliveryProofsRepository {
   abstract create(deliveryProof: DeliveryProof): Promise<void>;
   abstract findOneById(id: string): Promise<DeliveryProof | null>;
+  abstract findOneByURL(url: string): Promise<DeliveryProof | null>;
   abstract deleteOneById(id: string): Promise<void>;
 }
 
