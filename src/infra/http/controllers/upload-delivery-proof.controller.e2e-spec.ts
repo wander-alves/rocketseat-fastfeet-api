@@ -54,16 +54,19 @@ describe('[E2E] Upload Delivery Proof Controller', () => {
         neighborhood: 'Vila Sesamo',
         state: 'GO',
         zipcode: '0000-000',
+        status: 'PICKED_UP',
       },
     });
 
     const httpServer = app.getHttpServer();
-
     const response = await httpClient(httpServer)
-      .post(`/api/shipments/:${shipment.id}/delivery-proof`)
+      .post(`/api/shipments/${shipment.id}/delivery-proof`)
       .set('Authorization', `Bearer ${accessToken}`)
-      .attach('file', './tests/e2e/mock/upload-sample.png');
+      .attach('file', './tests/mocks/storage/upload-sample.jpg');
 
-    expect(response.statusCode).toBe(204);
+    expect(response.statusCode).toBe(201);
+    expect(response.body).toMatchObject({
+      deliveryProofId: expect.any(String),
+    });
   });
 });

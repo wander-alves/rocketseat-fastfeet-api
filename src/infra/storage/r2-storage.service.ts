@@ -35,14 +35,14 @@ class R2Storage implements Uploader {
     const uniqueFileName = `${uploadId}-${fileName}`;
     const bucketName = this.envService.get('AWS_BUCKET_NAME');
 
-    const postObject = new PutObjectCommand({
-      Bucket: bucketName,
-      Key: uniqueFileName,
-      ContentType: fileType,
-      Body: body,
-    });
-
-    await this.client.send(postObject);
+    await this.client.send(
+      new PutObjectCommand({
+        Bucket: bucketName,
+        Key: uniqueFileName,
+        ContentType: fileType,
+        Body: body,
+      }),
+    );
 
     return {
       url: uniqueFileName,

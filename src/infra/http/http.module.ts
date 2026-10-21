@@ -18,6 +18,7 @@ import { PickupShipmentUseCase } from '@/domain/delivery/application/use-cases/p
 import { RegisterCourierUseCase } from '@/domain/delivery/application/use-cases/register-courier';
 import { RegisterRecipientUseCase } from '@/domain/delivery/application/use-cases/register-recipient';
 import { RegisterShipmentUseCase } from '@/domain/delivery/application/use-cases/register-shipment';
+import { UploadDeliveryProofController } from '@/infra/http/controllers/upload-delivery-proof.controller';
 import { UpdateCourierPasswordUseCase } from '@/domain/delivery/application/use-cases/update-courier-password';
 import { UpdateRecipientPasswordUseCase } from '@/domain/delivery/application/use-cases/update-recipient-password';
 
@@ -37,6 +38,7 @@ import { RegisterRecipientController } from '@/infra/http/controllers/register-r
 import { RegisterShipmentController } from '@/infra/http/controllers/register-shipment.controller';
 import { UpdateCourierPasswordController } from '@/infra/http/controllers/update-courier-password.controller';
 import { UpdateRecipientPasswordController } from '@/infra/http/controllers/update-recipient-password.controller';
+import { UploadDeliveryProofUseCase } from '@/domain/delivery/application/use-cases/upload-delivery-proof';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -55,6 +57,7 @@ import { UpdateRecipientPasswordController } from '@/infra/http/controllers/upda
     RegisterCourierController,
     RegisterRecipientController,
     RegisterShipmentController,
+    UploadDeliveryProofController,
     UpdateCourierPasswordController,
     UpdateRecipientPasswordController,
   ],
@@ -73,6 +76,7 @@ import { UpdateRecipientPasswordController } from '@/infra/http/controllers/upda
     RegisterCourierUseCase,
     RegisterRecipientUseCase,
     RegisterShipmentUseCase,
+    UploadDeliveryProofUseCase,
     UpdateCourierPasswordUseCase,
     UpdateRecipientPasswordUseCase,
   ],

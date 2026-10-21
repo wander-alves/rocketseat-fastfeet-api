@@ -25,9 +25,25 @@ class PrismaDeliveryProofsRepository implements DeliveryProofsRepository {
       return null;
     }
 
-    const DeliveryProof = PrismaDeliveryProofMapper.toDomain(data);
+    const deliveryProof = PrismaDeliveryProofMapper.toDomain(data);
 
-    return DeliveryProof;
+    return deliveryProof;
+  }
+
+  async findOneByURL(url: string) {
+    const data = await this.prismaService.deliveryProof.findFirst({
+      where: {
+        url,
+      },
+    });
+
+    if (!data) {
+      return null;
+    }
+
+    const deliveryProof = PrismaDeliveryProofMapper.toDomain(data);
+
+    return deliveryProof;
   }
 
   async create(DeliveryProof: DeliveryProof) {

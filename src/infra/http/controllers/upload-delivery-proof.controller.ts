@@ -1,17 +1,19 @@
 import {
-  BadRequestException,
   Controller,
   HttpCode,
+  BadRequestException,
   NotFoundException,
+  UnauthorizedException,
   Param,
   Post,
-  UploadedFile,
-  UnauthorizedException,
   ParseFilePipe,
   MaxFileSizeValidator,
   FileTypeValidator,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import type { Express } from 'express';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 import { UserTokenDecorator } from '@/infra/authentication/user-token-decorator';
 import { type TokenPayload } from '@/infra/authentication/jwt.strategy';
@@ -26,7 +28,7 @@ const maxFileSize2MB = 1024 * 1024 * 2;
 const acceptedFileTypes = '(png|jpg|jpeg|webp)$';
 
 @Controller('/api/shipments/:id/delivery-proof')
-class DeliverShipmentController {
+class UploadDeliveryProofController {
   private useCase: UploadDeliveryProofUseCase;
 
   constructor(useCase: UploadDeliveryProofUseCase) {
@@ -34,7 +36,8 @@ class DeliverShipmentController {
   }
 
   @Post()
-  @HttpCode(204)
+  @UseInterceptors(FileInterceptor('file'))
+  @HttpCode(201)
   @Roles(Role.COURIER)
   async handle(
     @Param('id') shipmentId: string,
@@ -55,7 +58,7 @@ class DeliverShipmentController {
     const result = await this.useCase.execute({
       shipmentId,
       courierId: user.sub,
-      fileName: file.filename,
+      fileName: file.originalname,
       fileType: file.mimetype,
       body: file.buffer,
     });
@@ -79,4 +82,4 @@ class DeliverShipmentController {
   }
 }
 
-export { DeliverShipmentController };
+export { UploadDeliveryProofController };
