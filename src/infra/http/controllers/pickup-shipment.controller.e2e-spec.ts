@@ -27,13 +27,13 @@ describe('[E2E] Pickup Shipment Controller', () => {
   });
 
   test('[PATCH] /api/shipments/:id/pickup', async () => {
-    const recipient = await prisma.user.findFirst({
+    const recipient = await prisma.user.findFirstOrThrow({
       where: {
         name: 'Recipient01',
       },
     });
 
-    const admin = await prisma.user.findFirst({
+    const admin = await prisma.user.findFirstOrThrow({
       where: {
         name: 'Courier01',
       },
@@ -41,7 +41,7 @@ describe('[E2E] Pickup Shipment Controller', () => {
 
     const shipment = await prisma.shipment.create({
       data: {
-        recipientId: recipient!.id,
+        recipientId: recipient.id,
         name: 'Pacote 02',
         street: 'Rua dos Bobos',
         addressNumber: 0,
@@ -52,7 +52,7 @@ describe('[E2E] Pickup Shipment Controller', () => {
     });
 
     const accessToken = await jwt.encrypt({
-      sub: admin?.id,
+      sub: admin.id,
       role: 'COURIER',
     });
 

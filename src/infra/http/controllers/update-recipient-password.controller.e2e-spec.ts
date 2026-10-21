@@ -41,8 +41,8 @@ describe('[E2E] Update Recipient Password Controller', () => {
     });
 
     const accessToken = await jwt.encrypt({
-      sub: adminUser?.id,
-      role: 'LOGISTICSSUPPORT',
+      sub: adminUser.id,
+      role: adminUser.role,
     });
 
     const recipientId = recipient.id;

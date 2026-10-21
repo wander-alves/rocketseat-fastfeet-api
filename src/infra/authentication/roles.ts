@@ -4,7 +4,7 @@ const ROLES_KEY = 'roles';
 
 enum Role {
   COURIER = 'COURIER',
-  ADMIN = 'LOGISTICSSUPPORT',
+  ADMIN = 'LOGISTICS_SUPPORT',
 }
 
 const Roles = (...roles: Role[]) => SetMetadata(ROLES_KEY, roles);

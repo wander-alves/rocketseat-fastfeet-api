@@ -41,7 +41,7 @@ describe('[E2E] Upload Delivery Proof Controller', () => {
     });
 
     const accessToken = await jwt.encrypt({
-      sub: courier?.id,
+      sub: courier.id,
       role: 'COURIER',
     });
 

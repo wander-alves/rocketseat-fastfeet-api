@@ -27,20 +27,20 @@ describe('[E2E] Deliver Shipment Controller', () => {
   });
 
   test('[PATCH] /api/shipments/:shipmentId/deliver', async () => {
-    const recipient = await prisma.user.findFirst({
+    const recipient = await prisma.user.findFirstOrThrow({
       where: {
         name: 'Recipient01',
       },
     });
 
-    const courier = await prisma.user.findFirst({
+    const courier = await prisma.user.findFirstOrThrow({
       where: {
         name: 'Courier01',
       },
     });
 
     const accessToken = await jwt.encrypt({
-      sub: courier?.id,
+      sub: courier.id,
       role: 'COURIER',
     });
 
@@ -53,7 +53,7 @@ describe('[E2E] Deliver Shipment Controller', () => {
 
     const shipment = await prisma.shipment.create({
       data: {
-        recipientId: recipient!.id,
+        recipientId: recipient.id,
         name: 'Pacote 02',
         street: 'Rua dos Bobos',
         addressNumber: 0,

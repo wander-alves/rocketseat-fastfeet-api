@@ -50,7 +50,7 @@ describe('[Unitary] Authenticate Logistics Support Use Case', () => {
       const { accessToken } = result.value;
       expect(JSON.parse(accessToken)).toMatchObject({
         sub: expect.any(String),
-        role: 'LOGISTICSSUPPORT',
+        role: 'LOGISTICS_SUPPORT',
       });
     }
   });

@@ -28,24 +28,24 @@ describe('[E2E] Delete Recipient Controller', () => {
   });
 
   test('[DELETE] /api/accounts/recipients/:recipientId', async () => {
-    const adminUser = await prisma.user.findFirst({
+    const adminUser = await prisma.user.findFirstOrThrow({
       where: {
         name: 'Admin01',
       },
     });
 
-    const recipient = await prisma.user.findFirst({
+    const recipient = await prisma.user.findFirstOrThrow({
       where: {
         name: 'Recipient01',
       },
     });
 
     const accessToken = await jwt.encrypt({
-      sub: adminUser?.id,
-      role: 'LOGISTICSSUPPORT',
+      sub: adminUser.id,
+      role: adminUser.role,
     });
 
-    const recipientId = recipient?.id;
+    const recipientId = recipient.id;
 
     const httpServer = app.getHttpServer();
 
