@@ -60,6 +60,7 @@ describe('[E2E] Deliver Shipment Controller', () => {
         neighborhood: 'Vila Sesamo',
         state: 'GO',
         zipcode: '0000-000',
+        status: 'PICKED_UP',
       },
     });
 
