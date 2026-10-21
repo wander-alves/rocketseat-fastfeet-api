@@ -27,7 +27,7 @@ async function seed() {
         name: 'Admin01',
         documentID: '999.999.999-01',
         password: await hash('admin01', 8),
-        role: 'LOGISTICSSUPPORT',
+        role: 'LOGISTICS_SUPPORT',
       },
       {
         name: 'Courier01',
