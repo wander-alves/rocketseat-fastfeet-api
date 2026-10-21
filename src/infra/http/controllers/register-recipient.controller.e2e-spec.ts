@@ -27,15 +27,15 @@ describe('[E2E] Register Recipient Controller', () => {
   });
 
   test('[POST] /api/accounts/recipients', async () => {
-    const user = await prisma.user.findFirst({
+    const adminUser = await prisma.user.findFirstOrThrow({
       where: {
         name: 'Admin01',
       },
     });
 
     const accessToken = await jwt.encrypt({
-      sub: user?.id,
-      role: 'LOGISTICSSUPPORT',
+      sub: adminUser.id,
+      role: adminUser.role,
     });
 
     const httpServer = app.getHttpServer();

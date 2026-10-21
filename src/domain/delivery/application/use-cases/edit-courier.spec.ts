@@ -69,7 +69,7 @@ describe('[Unitary] Edit Courier Use Case', () => {
     });
   });
 
-  it('should not be able to edit a courier without from non admin account', async () => {
+  it('should not be able to edit a courier from non admin account', async () => {
     const result = await sut.execute({
       logisticsSupportId: courier.id.value,
       courierId: courier.id.value,

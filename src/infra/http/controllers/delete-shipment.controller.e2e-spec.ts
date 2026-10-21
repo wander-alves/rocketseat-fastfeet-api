@@ -27,26 +27,26 @@ describe('[E2E] Delete Shipment Controller', () => {
   });
 
   test('[POST] /api/shipments/:id', async () => {
-    const recipient = await prisma.user.findUniqueOrThrow({
+    const recipient = await prisma.user.findFirstOrThrow({
       where: {
-        documentID: '888.888.888-02',
+        name: 'Recipient01',
       },
     });
 
-    const admin = await prisma.user.findUniqueOrThrow({
+    const adminUser = await prisma.user.findFirstOrThrow({
       where: {
-        documentID: '999.999.999-01',
+        name: 'Admin01',
       },
     });
 
     const accessToken = await jwt.encrypt({
-      sub: admin.id,
-      role: admin.role,
+      sub: adminUser.id,
+      role: adminUser.role,
     });
 
     const shipment = await prisma.shipment.create({
       data: {
-        recipientId: recipient?.id,
+        recipientId: recipient.id,
         name: 'Pacote 01',
         street: 'Rua dos Bobos',
         addressNumber: 0,

@@ -28,24 +28,24 @@ describe('[E2E] Delete Courier Controller', () => {
   });
 
   test('[DELETE] /api/accounts/couriers/:courierId', async () => {
-    const adminUser = await prisma.user.findFirst({
+    const adminUser = await prisma.user.findFirstOrThrow({
       where: {
         name: 'Admin01',
       },
     });
 
-    const courier = await prisma.user.findFirst({
+    const courier = await prisma.user.findFirstOrThrow({
       where: {
         name: 'Courier01',
       },
     });
 
     const accessToken = await jwt.encrypt({
-      sub: adminUser?.id,
-      role: 'LOGISTICSSUPPORT',
+      sub: adminUser.id,
+      role: adminUser.role,
     });
 
-    const courierId = courier?.id;
+    const courierId = courier.id;
 
     const httpServer = app.getHttpServer();
 

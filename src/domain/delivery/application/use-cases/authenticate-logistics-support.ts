@@ -55,11 +55,9 @@ class AuthenticateLogisticsSupportUseCase {
       return left(new InvalidCredentialError());
     }
 
-    const role = logisticsSupport.constructor.name.toUpperCase();
-
     const accessToken = await this.encrypter.encrypt({
       sub: logisticsSupport.id.value,
-      role,
+      role: 'LOGISTICS_SUPPORT',
     });
 
     return right({

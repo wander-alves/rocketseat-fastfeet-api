@@ -59,7 +59,7 @@ describe('[Unitary] Pickup Shipment Use Case', () => {
     sut = new PickupShipmentUseCase(couriersRepository, shipmentsRepository);
   });
 
-  it.only('should be able to pickup a shipment from courier account', async () => {
+  it('should be able to pickup a shipment from courier account', async () => {
     const result = await sut.execute({
       courierId: courier.id.value,
       shipmentId: shipment.id.value,

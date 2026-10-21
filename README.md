@@ -20,7 +20,7 @@ Para registrar no GitHub issues:
 - [x] Implementar a funcionalidade para alterar a senha de usuários, com acesso restrito a usuário `admin`
 - [x] Implementar a funcionalidade para marcar uma encomenda como "aguardando" (disponível para retirada)
 - [x] Implementar a funcionalidade para um entregador registrar a "retirada" de uma encomenda
-- [ ] Implementar a funcionalidade para marcar uma encomenda como "entregue" (restrita ao entregador que a retirou)
+- [x] Implementar a funcionalidade para marcar uma encomenda como "entregue" (restrita ao entregador que a retirou)
 - [ ] Implementar a funcionalidade para marcar uma encomenda como "devolvida"
 - [ ] Desenvolver a listagem de encomendas com endereços próximos a localização do entregador
 - [ ] Desenvolver a listagem das entregas associadas ao entregador
@@ -47,6 +47,9 @@ Para registrar no GitHub issues:
 - Somente usuário do tipo admin pode realizar operações de CRUD dos entregadores
 - Somente usuário do tipo admin pode realizar operações de CRUD dos destinatários
 - Para marcar uma encomenda como entregue é obrigatório o envio de uma foto
+  - Questionamentos que surgiram durante a tarefa: 
+    - Como garantir que uma mesma imagem não sofrerá upload duplicado?
+    - Isso é responsabilidade do caso de uso ou do serviço de upload?
 - Somente o entregador que retirou a encomenda pode marcar ela como entregue
 - Somente o admin pode alterar a senha de um usuário
 - Não deve ser possível um entregador listar as encomendas de outro entregador
